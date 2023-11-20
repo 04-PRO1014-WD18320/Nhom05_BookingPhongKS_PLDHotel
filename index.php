@@ -9,7 +9,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             $listphong=loadall_phong($keyw="",$type_id=0);
             include "admin/phong/danhsachphong.php";
             break;
-            case "themphong":
+        case "themphong":
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Lấy dữ liệu từ các trường nhập
                     $room_id = $_POST['room_id'];
@@ -37,6 +37,13 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 $listdanhmuc=  pdo_query($sql);
                 include "admin/phong/add.php";
                 break;
+        case "xoaphong":
+                    if(isset($_GET['id'])&&($_GET['id']>0)){
+                        delete_phong($_GET['id']); 
+                    }
+                    $listphong=loadall_phong();
+                    include "admin/phong/danhsachphong.php";                     
+                    break;    
         case "dmphong":
             include "admin/danhmuc.php";
             break;
