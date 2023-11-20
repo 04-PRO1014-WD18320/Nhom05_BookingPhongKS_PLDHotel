@@ -2,6 +2,7 @@
 include "view/header.php";
 include "model/pdo.php";
 include "model/phong.php";
+include "model/danhmuc.php";
 if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
@@ -87,12 +88,13 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 $listphong=loadall_phong();
                 include "admin/phong/danhsachphong.php";                     
                 break;
-        case "dmphong":
-            include "admin/danhmuc.php";
+        case "listdm":
+            $listdm=loadall_dm($keyw="",$type_id=0);
+            include "admin/danhmuc/listdm.php";
             break;
             case 'adddm':
                 // Kiểm tra khi nhấn vào submit
-                if(isset($_POST['themmoi']) && ($_POST['themmoi']))
+                if($_SERVER["REQUEST_METHOD"] == "POST")
                 {
                     $type_name=$_POST['type_name'];
                     $img=$_FILES['img']['name'];
@@ -105,44 +107,53 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 } else {
     
                 }
-                $sql="INSERT INTO type_room(type_name,img,max_people,max_bed) VALUES ('$type_name','$img','$max_people','$max_bed')";
-                pdo_execute($sql);
+                insert_danhmuc($type_name,$img,$max_people,$max_bed);
                 $thongbao="Thêm thành công";
                 }
                 include "admin/danhmuc/add.php";
                 break;
             
-                case "updatedm":
-                    if(isset($_POST['capnhat']) && ($_POST['capnhat'])){
+                case "suadm":
+                    if($_SERVER["REQUEST_METHOD"] == "POST"){
+                        $dm=loadone_dm($_GET['id']);
                         $type_id=$_POST['type_id'];
                         $type_name=$_POST['type_name'];
                         $img=$_FILES['img']['name'];
                         $max_people=$_POST['max_people'];
                         $max_bed=$_POST['max_bed'];
-                        $target_dir = "../upload/";
-                        if($img!=""){
-                            $sql = "update type_room set type_name ='".$type_name."',img ='".$img."',max_people ='".$max_people."',max_bed ='".$max_bed."' where id=".$type_id;
-                            }
-                            else{
-                                $sql = "update type_room set type_name ='".$type_name."',max_people ='".$max_people."',max_bed ='".$max_bed."' where id=".$type_id;
-                            }
+                        $oldimg = $_POST["oldimg"];
+                    // Xử lý ảnh nếu có được chọn
+                    if (!empty($_FILES['img']['tmp_name']))  {
+                        $upload_dir = "../upload/"; // Thư mục lưu trữ ảnh
+                        $img_path = $upload_dir . basename($_FILES['img']['name']);
+                        move_uploaded_file($_FILES['img']['tmp_name'], $img_path);
+                        $img=$img_path;
+                    }
+                    else{
+                        $img=$oldimg;
+                    }
+                    $sql="UPDATE type_room SET 
+                    type_name = '$type_name', 
+                    img = '$img', 
+                    max_people = '$max_people', 
+                    max_bed = '$max_bed', 
+                    WHERE type_id = '$type_id'";
                         pdo_execute($sql);
                         $thongbao="Update thành công";
-                        
                     }
+                   $listdm=loadall_dm();
                 include "admin/danhmuc/update.php";
                 break;
+
+                case "xoadm":
+                    if(isset($_GET['id'])&&($_GET['id']>0)){
+                        delete_dm($_GET['id']); 
+                    }
+                    $listdm=loadall_dm();
+                    include "admin/danhmuc/listdm.php";                     
+                    break;
             }
-                // case "xoadm":
-                //     if(isset($_GET['id']) && ($_GET['id']>0)){ 
-                //         $sql = "delete from danhmuc where id=".$type_id;
-                //         pdo_execute($sql);
-                // }
-                //     $sql =" select * from type_room order by id desc";
-                //     $listdanhmuc = pdo_query($sql);
-                //     return $listdanhmuc;
-                // include "admin/danhmuc/listdm.php";
-                // break;
+
      }
      else{
         include "view/home.php";

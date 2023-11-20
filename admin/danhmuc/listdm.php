@@ -65,8 +65,8 @@
                                             <?php
                                             foreach ($listdm as $danhmuc){
                                                 extract($danhmuc);
-                                                $suadm ="index.php?pg=suadm&type_id=".$type_id;
-                                                $xoadm ="index.php?pg=xoadm&type_id=".$type_id;
+                                                $suadm ="index.php?pg=suadm&id=".$type_id;
+                                                $xoadm ="index.php?pg=xoadm&id=".$type_id;
                                                 echo'<tr>
                                                 <td>'.$type_id.'</td>
                                                 <td>'.$type_name.'</td>

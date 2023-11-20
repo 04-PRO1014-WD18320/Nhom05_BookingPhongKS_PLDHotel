@@ -1,4 +1,9 @@
-
+<?php
+if(is_array($dm))
+{
+  extract($dm);
+}
+?>
 <form action="index.php?act=updatedm"  method="post" enctype="multipart/form-data">
 <div class="mb-3">
     <label  class="form-label">Mã danh mục</label>
@@ -6,7 +11,7 @@
 </div>
 <div class="mb-3">
     <label  class="form-label">Tên phòng</label>
-    <input type="text" class="form-control" name="type_name" aria-describedby="emailHelp">
+    <input type="text" class="form-control" name="type_name" aria-describedby="emailHelp" value="<?php echo $type_name?>">
   </div>
   <div class="mb-3">
     <label  class="form-label">Hình ảnh</label>
@@ -18,11 +23,11 @@
   </div> -->
   <div class="mb-3">
     <label  class="form-label">Số người</label>
-    <input type="text" class="form-control" name="max_people" aria-describedby="emailHelp">
+    <input type="text" class="form-control" name="max_people" aria-describedby="emailHelp" value="<?php echo $max_people?>">
   </div>
   <div class="mb-3">
     <label  class="form-label">Số giường</label>
-    <input type="text" class="form-control" name="max_bed" aria-describedby="emailHelp">
+    <input type="text" class="form-control" name="max_bed" aria-describedby="emailHelp" value="<?php echo $max_bed?>">
   </div>
 
   <button type="submit" name="themmoi" class="btn btn-primary">Thêm</button>
