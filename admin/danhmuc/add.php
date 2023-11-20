@@ -1,4 +1,4 @@
-
+<h1>Thêm mới danh mục</h1>
 <form action="index.php?act=adddm"  method="post" enctype="multipart/form-data">
 <div class="mb-3">
     <label  class="form-label">Mã danh mục</label>
