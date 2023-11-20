@@ -5,9 +5,8 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
         case "dsphong":
-            $sql="select * from rooms";
-            $listphong=pdo_query($sql);
-            include "admin/danhsachphong.php";
+            $listphong=loadall_phong($keyw="",$type_id=0);
+            include "admin/phong/danhsachphong.php";
             break;
             case "themphong":
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
