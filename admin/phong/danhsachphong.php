@@ -75,9 +75,9 @@
                    <?php                    
                 foreach ($listphong as $room){
                 extract($room);
-                $suasp="index.php?act=suaphong&id=".$room_id;
-                $xoasp="index.php?act=xoaphong&id=".$room_id;
-                $hinhpath= "./../upload/".$img;
+                $suaphong="index.php?pg=suaphong&id=".$room_id;
+                $xoaphong="index.php?pg=xoaphong&id=".$room_id;
+                $hinhpath= $img;
                 if(is_file($hinhpath)){
                     $hinh="<img src='".$hinhpath."' height='200'>";
                 }else{
@@ -89,9 +89,10 @@
                 <td>'.$hinh.'</td>
                 <td>'.$description.'</td>
                 <td>'.$room_price.'</td>
-                <td>'.$Trangthai.'</td>
+                <td>'.($Trangthai == 1 ? 'Available' : 'Unavailable').'</td>
 
-                <td><a href="'.$suasp.'"><input type="button" value="Sửa"></a>  <a href="'.$xoasp.'"> <input type="button" value="Xóa"></a> </td>
+                <td><a href="'.$suaphong.'"><input type="button" value="Sửa"></a>  <a href="'.$xoaphong.'">
+                 <input type="button" value="Xóa" onclick="return confirm(\'Bạn có chắc muốn xóa\')"></a> </td>
             </tr>';
             }
 
