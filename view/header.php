@@ -110,7 +110,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="index.php?pg=dsphong">Danh sách phòng</a>
-                        <a class="collapse-item" href="index.php?pg=dsphong">Danh mục phòng</a>
+                        <a class="collapse-item" href="index.php?pg=listdm">Danh mục phòng</a>
                         <a class="collapse-item" href="index.php?pg=dsphong">Thêm hình ảnh</a>
                         <a class="collapse-item" href="register.html">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
