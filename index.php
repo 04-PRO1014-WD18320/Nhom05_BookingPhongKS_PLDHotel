@@ -1,6 +1,7 @@
 <?php
 include "view/header.php";
 include "model/pdo.php";
+include "model/phong.php";
 if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
