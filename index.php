@@ -9,6 +9,35 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             $listphong=loadall_phong($keyw="",$type_id=0);
             include "admin/phong/danhsachphong.php";
             break;
+            case "themphong":
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    // Lấy dữ liệu từ các trường nhập
+                    $room_id = $_POST['room_id'];
+                    $room_name = $_POST['room_name'];
+                    $img = $_FILES['img']; // Dữ liệu từ trường tệp tải lên
+                    $description = $_POST['description'];
+                    $room_price = $_POST['room_price'];
+                    $type_id = $_POST['type_id'];
+                    $Trangthai = $_POST['Trangthai'];
+                    $img = $_FILES['img'];
+                    $img_name = $img['name'];
+                    $img_tmp_name = $img['tmp_name'];
+                    $img_error = $img['error'];
+                    
+                    if ($img_error === 0) {
+        // Di chuyển tệp tạm thời đến một địa chỉ cụ thể trên máy chủ
+                    $img_destination = 'upload/' . $img_name;
+                    move_uploaded_file($img_tmp_name, $img_destination);
+    
+                    insert_phong($room_name,$img_destination,$description,$room_price,$type_id,$Trangthai);
+                    $thongbao="Thêm thành công";
+                    }
+                }
+                $sql="SELECT * FROM type_room WHERE 1";
+                $listdanhmuc=  pdo_query($sql);
+                include "admin/phong/add.php";
+                break;
+=======
         case "themphong":
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Lấy dữ liệu từ các trường nhập
