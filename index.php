@@ -9,7 +9,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             $listphong=loadall_phong($keyw="",$type_id=0);
             include "admin/phong/danhsachphong.php";
             break;
-            case "themphong":
+        case "themphong":
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Lấy dữ liệu từ các trường nhập
                     $room_id = $_POST['room_id'];
@@ -37,6 +37,13 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 $listdanhmuc=  pdo_query($sql);
                 include "admin/phong/add.php";
                 break;
+        case "xoaphong":
+                    if(isset($_GET['id'])&&($_GET['id']>0)){
+                        delete_phong($_GET['id']); 
+                    }
+                    $listphong=loadall_phong();
+                    include "admin/phong/danhsachphong.php";                     
+                    break;    
         case "dmphong":
             include "admin/danhmuc.php";
             break;
@@ -58,8 +65,44 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             break;
         case "updatedm":
             include "admin/danhmuc/update.php";
-        }
-    }else{
+            break;
+        case "listtk":
+            $listtk=loadall_taikhoan();
+            include "admin/taikhoan/listtk.php";
+            break;
+        case "xoatk":
+            if(isset($_GET['id'])&&($_GET['id']>0)){
+                delete_taikhoan($_GET['id']); 
+            }
+            $listtk=loadall_taikhoan();
+            include "admin/taikhoan/listtk.php";
+            break;
+        case "suatk":
+            if(isset($_GET['id'])&&($_GET['id']>0)){
+                $users=loadone_taikhoan($_GET['id']);
+            }
+                include "admin/taikhoan/update.php";
+                break;  
+                case "login":
+                    session_start();
+                    if(isset($_POST['login'])){
+                        $user = $_POST['user_name'];
+                        $pass = $_POST['pass'];
+                        $checkuser = checkuser($user, $pass);
+                        if(is_array($checkuser)){ 
+                            $_SESSION['tai_khoan'] = $checkuser;
+                            header('Location: index.php');
+                            exit; // Dừng việc thực thi mã PHP sau đây
+                            
+                        }
+                        else {
+                            $thongbao = "Tài khoản không tồn tại. Vui lòng kiểm tra hoặc Đăng Ký";
+                        }
+                    }
+                    include "view/taikhoan/dangnhap.php";
+                    break;
+        }}
+        else{
         include "view/home.php";
     }
     include "view/footer.php";

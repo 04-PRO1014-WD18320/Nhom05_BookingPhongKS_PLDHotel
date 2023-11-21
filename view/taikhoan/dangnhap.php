@@ -1,3 +1,7 @@
+<?php
+        include_once(__DIR__ . '/../../model/pdo.php');
+        include_once (__DIR__ . '/../../controller/login.php'); 
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,13 +18,13 @@
         <div class="card" style="border-radius: 1rem;">
           <div class="row g-0">
             <div class="col-md-6 col-lg-5 d-none d-md-block">
-              <img src="#"
-                alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+              <img src="./upload/dangnhap.jpg" alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+        
             </div>
             <div class="col-md-6 col-lg-7 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
 
-                <form>
+              <form  action="dangnhap.php" method="post">
 
                   <div class="d-flex align-items-center mb-3 pb-1">
                     <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
@@ -30,23 +34,29 @@
                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Đăng nhập vào tài khoản của bạn</h5>
 
                   <div class="form-outline mb-4">
-                    <label class="form-label" for="email">Địa chỉ email</label>
-                    <input type="email" id="email" class="form-control form-control-lg" />
+                    <!-- <label class="form-label" for="email">Địa chỉ email</label>
+                    <input type="email" id="email" class="form-control form-control-lg" name="email" /> -->
+                    <label class="form-label" for="user_name">Tên tài khoản</label>
+                    <input type="text" id="username" class="form-control form-control-lg" name="username" />
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="pwd">Mật khẩu</label>
-                    <input type="password" id="pwd" class="form-control form-control-lg" />
+                    <input type="password" id="pwd" class="form-control form-control-lg" name="pass"/>
                   </div>
 
                   <div class="pt-1 mb-4">
-                    <button class="btn btn-dark btn-lg btn-block" type="button">Đăng nhập</button>
+                    <button class="btn btn-dark btn-lg btn-block" type="submit" name="login">Đăng nhập</button>
+                    <?php
+                    if(isset($thongbao)&&($thongbao!="")) echo '<span style="color: red; font-weight: bold;">' . $thongbao . '</span>';
+                    ?>
                   </div>
-
+                
                   <a class="small text-muted" href="#!">Quên mật khẩu</a>
-                  <p class="mb-5 pb-lg-2" style="color: #393f81;">Bạn chưa có tài khoản?<a href="#!"
+                  <p class="mb-5 pb-lg-2" style="color: #393f81;">Bạn chưa có tài khoản?<a href="dangky.php"
                       style="color: #393f81;">Đăng ký tại đây</a></p>
-                  <a href="#!" class="small text-muted">PLD HOTEL - KHÁCH SẠN CAO CẤP</a>
+                   
+                <a href="#!" class="small text-muted">PLD HOTEL - KHÁCH SẠN CAO CẤP</a>
                 </form>
 
               </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- <head>
+<head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,20 +9,20 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Danh sách phòng</title> -->
+    <title>Danh tài khoản</title>
 
     <!-- Custom fonts for this template -->
-    <!-- <link href="templatefree/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="templatefree/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet"> -->
+        rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <!-- <link href="templatefree/css/sb-admin-2.min.css" rel="stylesheet"> -->
+    <link href="templatefree/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
-    <!-- <link href="templatefree/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
+    <link href="templatefree/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
 </head>
 
@@ -33,7 +33,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Danh sách phòng</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Danh sách tài khoản</h1>
                     <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p> -->
@@ -41,7 +41,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Danh sách phòng</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Danh sách tài khoản</h6>
                             <a href="index.php?pg=themphong" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Thêm mới</a>
 
 
@@ -51,51 +51,57 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>id</th>
-                                            <th>Name</th>
-                                            <th>Img</th>
-                                            <th>Mô tả</th>
-                                            <th>giá phòng</th>
-                                            <th>Trạng thái</th>
-                                            <th>action</th>
+                                        <th scope="col">User ID</th>
+                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Birth Date</th>
+                                        <th scope="col">Gender</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">CCCD ID</th>
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                        <th>id</th>
-                                            <th>Name</th>
-                                            <th>Img</th>
-                                            <th>Mô tả</th>
-                                            <th>Giá phòng</th>
-                                            <th>Trạng thái</th>
-                                            <th>Action</th>
+                                        <th scope="col">User ID</th>
+                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Birth Date</th>
+                                        <th scope="col">Gender</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">CCCD ID</th>
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                    <?php                    
-                foreach ($listphong as $room){
-                extract($room);
-                $suaphong="index.php?pg=suaphong&id=".$room_id;
-                $xoaphong="index.php?pg=xoaphong&id=".$room_id;
-                $hinhpath= $img;
-                if(is_file($hinhpath)){
-                    $hinh="<img src='".$hinhpath."' height='200'>";
-                }else{
-                    $hinh="no photo";
-                }
+                foreach ($listtk as $user){
+                extract($user);
+                $suatk="index.php?pg=suatk&id=".$user_id;
+                $xoatk="index.php?pg=xoatk&id=".$user_id;
+                if($role==1){$chucnang='admin';}
+                else{
+                     if($role==2) {$chucnang='staff';}
+                        else {$chucnang='user';}}
                 echo ' <tr>
-                <td>'.$room_id.'</td>
-                <td>'.$room_name.'</td>
-                <td>'.$hinh.'</td>
-                <td>'.$description.'</td>
-                <td>'.$room_price.'</td>
-                <td>'.($Trangthai == 1 ? 'Available' : 'Unavailable').'</td>
+                <td>'.$user_id.'</td>
+                <td>'.$full_name.'</td>
+                <td>'.$phone_number.'</td>
+                <td>'.$birth_date.'</td>
+                <td>'.$gender.'</td>
+                <td>'.$username.'</td>
+                <td>'.$password.'</td>
+                <td>'.$CCCD_id.'</td>
+                <td>'.$chucnang.'</td>
 
-                <td><a href="'.$suaphong.'"><input type="button" value="Sửa"></a>  <a href="'.$xoaphong.'">
+                <td><a href="'.$suatk.'"><input type="button" value="Sửa"></a>  <a href="'.$xoatk.'">
                  <input type="button" value="Xóa" onclick="return confirm(\'Bạn có chắc muốn xóa\')"></a> </td>
             </tr>';
             }
-
             ?>
                                     </tbody>
                                 </table>
@@ -143,21 +149,21 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <!-- <script src="templatefree/vendor/jquery/jquery.min.js"></script>
-    <script src="templatefree/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <script src="templatefree/vendor/jquery/jquery.min.js"></script>
+    <script src="templatefree/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <!-- <script src="templatefree/vendor/jquery-easing/jquery.easing.min.js"></script> -->
+    <script src="templatefree/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <!-- <script src="templatefree/js/sb-admin-2.min.js"></script> -->
+    <script src="templatefree/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <!-- <script src="templatefree/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="templatefree/vendor/datatables/dataTables.bootstrap4.min.js"></script> -->
+    <script src="templatefree/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="templatefree/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <!-- <script src="templatefree/js/demo/datatables-demo.js"></script> -->
+    <script src="templatefree/js/demo/datatables-demo.js"></script>
 
 </body>
 

@@ -112,6 +112,7 @@
                         <a class="collapse-item" href="index.php?pg=dsphong">Danh sách phòng</a>
                         <a class="collapse-item" href="index.php?pg=dsphong">Danh mục phòng</a>
                         <a class="collapse-item" href="index.php?pg=dsphong">Thêm hình ảnh</a>
+                        <a class="collapse-item" href="index.php?pg=listtk">Danh sách tài khoản</a>
                         <a class="collapse-item" href="register.html">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                         <div class="collapse-divider"></div>
@@ -330,8 +331,8 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">phuongbm</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <!-- <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg"> -->
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -344,14 +345,15 @@
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="view/taikhoan/dangnhap.php">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
+                                
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="confirmLogout()">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
                                 </a>
                             </div>
                         </li>
@@ -360,4 +362,13 @@
 
                 </nav>
                 <!-- End of Topbar -->
-                
+                <!-- mã script cho phần logout -->
+                <script>
+                function confirmLogout() {
+                var isConfirmed = window.confirm("Bạn có chắc chắn muốn đăng xuất?");
+                if (isConfirmed) {
+                window.location.href = "view/taikhoan/dangnhap.php";
+                }
+                // Người dùng chọn "Hủy", không thực hiện chuyển hướng
+                }
+                </script>
