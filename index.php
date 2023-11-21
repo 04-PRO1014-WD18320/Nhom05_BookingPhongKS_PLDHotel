@@ -112,8 +112,14 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 }
                 include "admin/danhmuc/add.php";
                 break;
-            
-                case "suadm":
+
+                case :"suadm":
+                    if(isset($_GET['id']) && ($_GET['id']>0))
+                    {
+                        $dm = loadone_dm($_GET['id']);
+                    }
+                    $sql ="SELECT * FROM type_room WHERE id=".$type_id;
+                case "updatedm":
                     if($_SERVER["REQUEST_METHOD"] == "POST"){
                         $dm=loadone_dm($_GET['id']);
                         $type_id=$_POST['type_id'];
@@ -135,8 +141,8 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     $sql="UPDATE type_room SET 
                     type_name = '$type_name', 
                     img = '$img', 
-                    max_people = '$max_people', 
-                    max_bed = '$max_bed', 
+                    -- max_people = '$max_people', 
+                    -- max_bed = '$max_bed', 
                     WHERE type_id = '$type_id'";
                         pdo_execute($sql);
                         $thongbao="Update thành công";

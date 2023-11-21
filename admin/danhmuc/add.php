@@ -12,10 +12,6 @@
     <label  class="form-label">Hình ảnh</label>
     <input type="file" class="form-control" name="img" aria-describedby="emailHelp">
   </div>
-  <!-- <div class="mb-3">
-    <label  class="form-label">Ảnh</label>
-    <input type="file" class="form-control" name="img">
-  </div> -->
   <div class="mb-3">
     <label  class="form-label">Số người</label>
     <input type="text" class="form-control" name="max_people" aria-describedby="emailHelp">
