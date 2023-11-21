@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <title>Danh sách phòng</title>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Danh mục</title>
 
     <!-- Custom fonts for this template -->
     <link href="templatefree/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,7 +33,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Danh sách phòng</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Danh mục</h1>
                     <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p> -->
@@ -33,8 +41,8 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Danh sách phòng</h6>
-                            <a href="index.php?pg=themphong" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Thêm mới</a>
+                            <h6 class="m-0 font-weight-bold text-primary">Danh mục</h6>
+                            <a href="index.php?pg=adddm" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Thêm mới</a>
 
 
                         </div>
@@ -44,51 +52,32 @@
                                     <thead>
                                         <tr>
                                             <th>id</th>
-                                            <th>Name</th>
+                                            <th>Danh mục</th>
                                             <th>Img</th>
-                                            <th>Mô tả</th>
-                                            <th>giá phòng</th>
-                                            <th>Trạng thái</th>
-                                            <th>action</th>
+                                            <th>Số người</th>
+                                            <th>Số giường</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
-                                        <tr>
-                                        <th>id</th>
-                                            <th>Name</th>
-                                            <th>Img</th>
-                                            <th>Mô tả</th>
-                                            <th>giá phòng</th>
-                                            <th>Trạng thái</th>
-                                            <th>action</th>
-                                        </tr>
                                     </tfoot>
                                     <tbody>
-                   <?php                    
-                foreach ($listphong as $room){
-                extract($room);
-                $suaphong="index.php?pg=suaphong&id=".$room_id;
-                $xoaphong="index.php?pg=xoaphong&id=".$room_id;
-                $hinhpath= $img;
-                if(is_file($hinhpath)){
-                    $hinh="<img src='".$hinhpath."' height='200'>";
-                }else{
-                    $hinh="no photo";
-                }
-                echo ' <tr>
-                <td>'.$room_id.'</td>
-                <td>'.$room_name.'</td>
-                <td>'.$hinh.'</td>
-                <td>'.$description.'</td>
-                <td>'.$room_price.'</td>
-                <td>'.($Trangthai == 1 ? 'Available' : 'Unavailable').'</td>
-
-                <td><a href="'.$suaphong.'"><input type="button" value="Sửa"></a>  <a href="'.$xoaphong.'">
-                 <input type="button" value="Xóa" onclick="return confirm(\'Bạn có chắc muốn xóa\')"></a> </td>
-            </tr>';
-            }
-
-            ?>
+                                        <tr>
+                                            <?php
+                                            foreach ($listdm as $danhmuc){
+                                                extract($danhmuc);
+                                                $suadm ="index.php?pg=suadm&id=".$type_id;
+                                                $xoadm ="index.php?pg=xoadm&id=".$type_id;
+                                                echo'<tr>
+                                                <td>'.$type_id.'</td>
+                                                <td>'.$type_name.'</td>
+                                                <td>'.$img.'</td>
+                                                <td>'.$max_people.'</td>
+                                                <td>'.$max_bed.'</td>
+                                                <td><a href ="'.$suadm.'"><input type="button" value="Sửa"></a> <a href ="'.$xoadm.'"><input type="button" onclick="return confirm(\'Bạn có chắc chắn muốn xóa\')" value="Xóa"> </a></td>
+                                                </tr>';
+                                            }
+                                            ?>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -133,6 +122,23 @@
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="templatefree/vendor/jquery/jquery.min.js"></script>
+    <script src="templatefree/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="templatefree/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="templatefree/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="templatefree/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="templatefree/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="templatefree/js/demo/datatables-demo.js"></script>
 
 </body>
 
