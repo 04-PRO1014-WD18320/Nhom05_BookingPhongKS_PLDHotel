@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Danh sách phòng</title>
+    <title>Danh tài khoản</title>
 
     <!-- Custom fonts for this template -->
     <link href="templatefree/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -33,7 +33,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Danh sách phòng</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Danh sách tài khoản</h1>
                     <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p> -->
@@ -41,7 +41,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Danh sách phòng</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Danh sách tài khoản</h6>
                             <a href="index.php?pg=themphong" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Thêm mới</a>
 
 
@@ -51,50 +51,57 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>id</th>
-                                            <th>Name</th>
-                                            <th>Img</th>
-                                            <th>Mô tả</th>
-                                            <th>giá phòng</th>
-                                            <th>Trạng thái</th>
-                                            <th>action</th>
+                                        <th scope="col">User ID</th>
+                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Birth Date</th>
+                                        <th scope="col">Gender</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">CCCD ID</th>
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                        <th>id</th>
-                                            <th>Name</th>
-                                            <th>Img</th>
-                                            <th>Mô tả</th>
-                                            <th>giá phòng</th>
-                                            <th>Trạng thái</th>
-                                            <th>action</th>
+                                        <th scope="col">User ID</th>
+                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Birth Date</th>
+                                        <th scope="col">Gender</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">CCCD ID</th>
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                    <?php                    
-                foreach ($listphong as $room){
-                extract($room);
-                $suasp="index.php?act=suaphong&id=".$room_id;
-                $xoasp="index.php?act=xoaphong&id=".$room_id;
-                $hinhpath= "./../upload/".$img;
-                if(is_file($hinhpath)){
-                    $hinh="<img src='".$hinhpath."' height='200'>";
-                }else{
-                    $hinh="no photo";
-                }
+                foreach ($listtk as $user){
+                extract($user);
+                $suatk="index.php?pg=suatk&id=".$user_id;
+                $xoatk="index.php?pg=xoatk&id=".$user_id;
+                if($role==1){$chucnang='admin';}
+                else{
+                     if($role==2) {$chucnang='staff';}
+                        else {$chucnang='user';}}
                 echo ' <tr>
-                <td>'.$room_id.'</td>
-                <td>'.$room_name.'</td>
-                <td>'.$hinh.'</td>
-                <td>'.$description.'</td>
-                <td>'.$room_price.'</td>
-                <td>'.$Trangthai.'</td>
+                <td>'.$user_id.'</td>
+                <td>'.$full_name.'</td>
+                <td>'.$phone_number.'</td>
+                <td>'.$birth_date.'</td>
+                <td>'.$gender.'</td>
+                <td>'.$username.'</td>
+                <td>'.$password.'</td>
+                <td>'.$CCCD_id.'</td>
+                <td>'.$chucnang.'</td>
 
-                <td><a href="'.$suasp.'"><input type="button" value="Sửa"></a>  <a href="'.$xoasp.'"> <input type="button" value="Xóa"></a> </td>
+                <td><a href="'.$suatk.'"><input type="button" value="Sửa"></a>  <a href="'.$xoatk.'">
+                 <input type="button" value="Xóa" onclick="return confirm(\'Bạn có chắc muốn xóa\')"></a> </td>
             </tr>';
             }
-
             ?>
                                     </tbody>
                                 </table>
