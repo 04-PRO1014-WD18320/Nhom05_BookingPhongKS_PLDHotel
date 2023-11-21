@@ -27,14 +27,23 @@
 
   <div class="mb-3">
     <label class="form-label">Type ID</label>
-    <input type="text" class="form-control" name="type_id" required>
+    <select name="type_id" value="" class="form-control pro-edt-select form-control-primary">
+    <option value="0" selected> Loại</option>
+     <?php 
+        foreach($listdanhmuc as $danhmuc){
+        extract($danhmuc);
+        echo '<option value="'. $type_id .'">'.$type_name.'</option>';
+        }
+      ?> 
+		</select>
   </div>
+
 
   <div class="mb-3">
     <label class="form-label">Trangthai</label>
     <select class="form-select" name="Trangthai" required>
-      <option value="available">Available</option>
-      <option value="unavailable">Unavailable</option>
+      <option value="1">Available</option>
+      <option value="2">Unavailable</option>
     </select>
   </div>
 
