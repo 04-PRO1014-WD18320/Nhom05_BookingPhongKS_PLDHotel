@@ -1,27 +1,24 @@
-
-<form action="index.php?act=updatedm"  method="post" enctype="multipart/form-data">
-<div class="mb-3">
-    <label  class="form-label">Mã danh mục</label>
-    <input type="text" class="form-control" name="type_id" aria-describedby="emailHelp" disabled>
-</div>
+<h1>Chỉnh sửa danh mục</h1>
+<form action="index.php?pg=updatedm" method="post" enctype="multipart/form-data">
 <div class="mb-3">
     <label  class="form-label">Tên phòng</label>
-    <input type="text" class="form-control" name="type_name" aria-describedby="emailHelp" value="<?php $dm=['type_name']?>">
+    <input type="text" class="form-control" name="type_name" aria-describedby="emailHelp" value="<?=$type_room['type_name']?>">
   </div>
   <div class="mb-3">
     <label  class="form-label">Hình ảnh</label>
-    <input type="file" class="form-control" name="img" aria-describedby="emailHelp">
+    <input type="file" class="form-control" name="img" accept="image/*">
+    <input type="hidden" class="form-control" name="oldimg" accept="image/*"  value="<?=$type_room['img']?>" required>
   </div>
   <div class="mb-3">
     <label  class="form-label">Số người</label>
-    <input type="text" class="form-control" name="max_people" aria-describedby="emailHelp" value="<?php $dm=['type_name']?>" disabled>
+    <input type="text" class="form-control" name="max_people" aria-describedby="emailHelp" value="<?=$type_room['max_people']?>" disabled>
   </div>
   <div class="mb-3">
     <label  class="form-label">Số giường</label>
-    <input type="text" class="form-control" name="max_bed" aria-describedby="emailHelp" value="<?php $dm=['type_name']?>" disabled>
+    <input type="text" class="form-control" name="max_bed" aria-describedby="emailHelp" value="<?=$type_room['max_bed']?>" disabled>
   </div>
 
-  <button type="submit" name="themmoi" class="btn btn-primary">Thêm</button>
+  <button type="submit" name="themmoi" class="btn btn-primary">Cập nhật</button>
   <div>
     <?php
     if(isset($thongbao)&&($thongbao!="")) echo $thongbao;

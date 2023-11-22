@@ -136,40 +136,46 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 if($_SERVER["REQUEST_METHOD"] == "POST")
                 {
                     $type_name=$_POST['type_name'];
-                    $img=$_FILES['img']['name'];
                     $max_people=$_POST['max_people'];
+                    $img = $_FILES['img'];
                     $max_bed=$_POST['max_bed'];
-                    $target_dir = "../upload/";
-                $target_file = $target_dir . basename($_FILES["img"]["name"]);
-                if (move_uploaded_file($_FILES["img"]["tmp_name"], $target_file)) {
-    
-                } else {
-    
-                }
-                insert_danhmuc($type_name,$img,$max_people,$max_bed);
+                    $img = $_FILES['img'];
+                    $img_name = $img['name'];
+                    $img_tmp_name = $img['tmp_name'];
+                    $img_error = $img['error'];          
+                    if ($img_error === 0) {
+                        // Di chuyển tệp tạm thời đến một địa chỉ cụ thể trên máy chủ
+                        $img_destination = '../upload/' . $img_name;
+                        move_uploaded_file($img_tmp_name, $img_destination);
+                insert_danhmuc($type_name,$img_destination,$max_people,$max_bed);
                 $thongbao="Thêm thành công";
                 }
+            }
+                $sql ="SELECT * FROM type_room WHERE 1";
+                $listdanhmuc= pdo_query($sql);
                 include "danhmuc/add.php";
                 break;
 
                 case "suadm":
                     if(isset($_GET['id']) && ($_GET['id']>0))
                     {
-                        $dm = loadone_dm($_GET['id']);
+                        $type_room = loadone_dm($_GET['id']);
                     }
-                    $sql ="SELECT * FROM type_room WHERE id=".$_GET['id'];
-        case "updatedm":
+                    $sql ="SELECT * FROM type_room WHERE 1";
+                    $listdanhmuc= pdo_query($sql);
+                    include "danhmuc/update.php";
+                    break;
+
+                case "updatedm":
                     if($_SERVER["REQUEST_METHOD"] == "POST"){
-                        $dm=loadone_dm($_GET['id']);
                         $type_id=$_POST['type_id'];
                         $type_name=$_POST['type_name'];
-                        $img=$_FILES['img']['name'];
                         $max_people=$_POST['max_people'];
                         $max_bed=$_POST['max_bed'];
                         $oldimg = $_POST["oldimg"];
                     // Xử lý ảnh nếu có được chọn
                     if (!empty($_FILES['img']['tmp_name']))  {
-                        $upload_dir = "../upload/"; // Thư mục lưu trữ ảnh
+                        $upload_dir = "upload/"; // Thư mục lưu trữ ảnh
                         $img_path = $upload_dir . basename($_FILES['img']['name']);
                         move_uploaded_file($_FILES['img']['tmp_name'], $img_path);
                         $img=$img_path;
@@ -180,14 +186,14 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     $sql="UPDATE type_room SET 
                     type_name = '$type_name', 
                     img = '$img', 
-                    -- max_people = '$max_people', 
-                    -- max_bed = '$max_bed', 
+                    max_people ='$max_people',
+                    max_bed ='$max_bed'
                     WHERE type_id = '$type_id'";
                         pdo_execute($sql);
                         $thongbao="Update thành công";
                     }
-                   $listdm=loadall_dm();
-                include "danhmuc/update.php";
+                   $listdm=loadall_dm($keyw="",$type_id=0);
+                include "danhmuc/listdm.php";
                 break;
 
                 case "xoadm":
