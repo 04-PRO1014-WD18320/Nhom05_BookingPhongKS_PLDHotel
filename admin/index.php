@@ -1,5 +1,5 @@
 <?php
-include "view/header.php";
+include "header.php";
 include "model/pdo.php";
 include "model/phong.php";
 if(isset($_GET['pg'])&&($_GET['pg']!="")){
@@ -67,7 +67,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             include "admin/danhmuc/update.php";
         }
     }else{
-        include "view/home.php";
+        include "home.php";
     }
-    include "view/footer.php";
+    include "footer.php";
 ?>
