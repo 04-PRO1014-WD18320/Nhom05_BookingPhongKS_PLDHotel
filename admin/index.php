@@ -1,15 +1,15 @@
 <?php
 include "header.php";
-include "model/pdo.php";
-include "model/phong.php";
-include "model/danhmuc.php";
+include "../model/pdo.php";
+include "../model/phong.php";
+include "../model/danhmuc.php";
 
 if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
         case "dsphong":
             $listphong=loadall_phong($keyw="",$type_id=0);
-            include "admin/phong/danhsachphong.php";
+            include "phong/danhsachphong.php";
             break;
 
         case "themphong":
@@ -29,7 +29,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 
                 if ($img_error === 0) {
                     // Di chuyển tệp tạm thời đến một địa chỉ cụ thể trên máy chủ
-                    $img_destination = 'upload/' . $img_name;
+                    $img_destination = '../upload/' . $img_name;
                     move_uploaded_file($img_tmp_name, $img_destination);
     
                     insert_phong($room_name,$img_destination,$description,$room_price,$type_id,$Trangthai);
@@ -38,7 +38,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             }
             $sql="SELECT * FROM type_room WHERE 1";
             $listdanhmuc=  pdo_query($sql);
-            include "admin/phong/add.php";
+            include "phong/add.php";
             break;
 
         case "xoaphong":
@@ -46,7 +46,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 delete_phong($_GET['id']); 
             }
             $listphong=loadall_phong();
-            include "admin/phong/danhsachphong.php";                     
+            include "phong/danhsachphong.php";                     
             break;
         // case "adddm":
         //     // Kiểm tra khi nhấn vào submit
@@ -66,14 +66,14 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
         //     break;
         case "listtk":
             $listtk=loadall_taikhoan();
-            include "admin/taikhoan/listtk.php";
+            include "taikhoan/listtk.php";
             break;
         case "xoatk":
             if(isset($_GET['id'])&&($_GET['id']>0)){
                 delete_taikhoan($_GET['id']); 
             }
             $listtk=loadall_taikhoan();
-            include "admin/taikhoan/listtk.php";
+            include "taikhoan/listtk.php";
             break;
 
         case "suaphong":
@@ -82,7 +82,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             }
             $sql="SELECT * FROM type_room WHERE 1";
             $listdanhmuc=  pdo_query($sql);
-            include "admin/phong/update.php";
+            include "phong/update.php";
             break; 
 
         case "updatephong":
@@ -118,18 +118,18 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             
             }
             $listphong=loadall_phong($keyw="",$type_id=0);
-            include "admin/phong/danhsachphong.php";
+            include "phong/danhsachphong.php";
             break; 
             case "xoaphong":
                 if(isset($_GET['id'])&&($_GET['id']>0)){
                     delete_phong($_GET['id']); 
                 }
                 $listphong=loadall_phong();
-                include "admin/phong/danhsachphong.php";                     
+                include "phong/danhsachphong.php";                     
                 break;
         case "listdm":
             $listdm=loadall_dm($keyw="",$type_id=0);
-            include "admin/danhmuc/listdm.php";
+            include "danhmuc/listdm.php";
             break;
         case 'adddm':
                 // Kiểm tra khi nhấn vào submit
@@ -149,15 +149,15 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 insert_danhmuc($type_name,$img,$max_people,$max_bed);
                 $thongbao="Thêm thành công";
                 }
-                include "admin/danhmuc/add.php";
+                include "danhmuc/add.php";
                 break;
 
-                case :"suadm":
+                case "suadm":
                     if(isset($_GET['id']) && ($_GET['id']>0))
                     {
                         $dm = loadone_dm($_GET['id']);
                     }
-                    $sql ="SELECT * FROM type_room WHERE id=".$type_id;
+                    $sql ="SELECT * FROM type_room WHERE id=".$_GET['id'];
         case "updatedm":
                     if($_SERVER["REQUEST_METHOD"] == "POST"){
                         $dm=loadone_dm($_GET['id']);
@@ -187,7 +187,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                         $thongbao="Update thành công";
                     }
                    $listdm=loadall_dm();
-                include "admin/danhmuc/update.php";
+                include "danhmuc/update.php";
                 break;
 
                 case "xoadm":
@@ -195,12 +195,12 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                         delete_dm($_GET['id']); 
                     }
                     $listdm=loadall_dm();
-                    include "admin/danhmuc/listdm.php";                     
+                    include "danhmuc/listdm.php";                     
                     break;
             }
 
      } else{
-        include "view/home.php";
+        include "home.php";
     }
     include "footer.php";
 ?>

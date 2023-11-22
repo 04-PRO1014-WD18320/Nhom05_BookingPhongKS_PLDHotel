@@ -13,7 +13,7 @@
                     $_SESSION["id"] = $value["role"];
                     $_SESSION["idPerson"] = $value["user_id"];
                     if($_SESSION["id"] ) {
-                        header("location:__DIR__ . /../../../index.php");
+                        header("location:__DIR__ . /../../../admin/index.php");
                         // header("location:./client-view/index.php"); 
                     } else {
                         // header("location:./admin-view/dashboard.php?ctr=dashboard");

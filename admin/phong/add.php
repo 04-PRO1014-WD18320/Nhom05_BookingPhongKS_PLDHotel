@@ -48,4 +48,7 @@
   </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>
+  <?php
+                    if(isset($thongbao)&&($thongbao!="")) echo '<span style="color: green; font-weight: bold;">' . $thongbao . '</span>';
+                    ?>
 </form>
