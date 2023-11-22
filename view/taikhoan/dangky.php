@@ -1,3 +1,8 @@
+<?php
+        include_once(__DIR__ . '/../../model/pdo.php');
+        include_once (__DIR__ . '/../../controller/signup.php'); 
+        var_dump($username);
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,13 +19,13 @@
         <div class="card" style="border-radius: 1rem;">
           <div class="row g-0">
             <div class="col-md-6 col-lg-5 d-none d-md-block">
-              <img src="#"
-                alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+              <img src="dangnhap.jpg"
+                alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;height:700px" />
             </div>
             <div class="col-md-6 col-lg-7 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
-
-                <form>
+              
+              <form  action="dangky.php" method="post">
 
                   <div class="d-flex align-items-center mb-3 pb-1">
                     <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
@@ -31,26 +36,32 @@
 
                   <div class="form-outline mb-4">
                     <label class="form-label">Họ & tên</label>
-                    <input type="text" id="name" class="form-control form-control-lg" />
+                    <input type="text" id="name" class="form-control form-control-lg" name="username" />
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label">Địa chỉ email</label>
-                    <input type="email" id="email" class="form-control form-control-lg" />
+                    <input type="email" id="email" class="form-control form-control-lg" name="email"  />
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label">Số điện thoại</label>
-                    <input type="text" id="sdt" class="form-control form-control-lg" />
+                    <input input type="tel" id="sdt" pattern="[0-9]{10}" placeholder="Nhập số điện thoại (10 chữ số)" required class="form-control form-control-lg" name="sdt"/>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label">Mật khẩu</label>
-                    <input type="password" id="pwd" class="form-control form-control-lg" />
+                    <input type="password" id="pwd" class="form-control form-control-lg" name="pass"/>
                   </div> 
-
+                  <div class="form-outline mb-4">
+                    <label class="form-label">Nhập lại mật khẩu</label>
+                    <input type="password" class="form-control form-control-lg" name="rppass"/>
+                  </div> 
                   <div class="pt-1 mb-4">
-                    <button class="btn btn-dark btn-lg btn-block" type="button">Đăng ký</button>
+                    <button class="btn btn-dark btn-lg btn-block" type="submit" name="signup_btn">Đăng ký</button>
+                    <?php
+                    if(isset($thongbao)&&($thongbao!="")) echo '<span style="color: red; font-weight: bold;">' . $thongbao . '</span>';
+                    ?>
                   </div>
                   <a href="#!" class="small text-muted">PLD HOTEL - KHÁCH SẠN CAO CẤP</a>
                 </form>
