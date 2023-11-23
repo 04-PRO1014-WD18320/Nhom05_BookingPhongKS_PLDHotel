@@ -161,8 +161,6 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     {
                         $type_room = loadone_dm($_GET['id']);
                     }
-                    $sql ="SELECT * FROM type_room WHERE 1";
-                    $listdanhmuc= pdo_query($sql);
                     include "danhmuc/update.php";
                     break;
 
@@ -183,15 +181,19 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     else{
                         $img=$oldimg;
                     }
-                    $sql="UPDATE type_room SET 
-                    type_name = '$type_name', 
-                    img = '$img', 
-                    max_people ='$max_people',
-                    max_bed ='$max_bed'
-                    WHERE type_id = '$type_id'";
+                    if (isset($type_id)) {
+                        $sql = "UPDATE type_room SET 
+                                type_name = '$type_name', 
+                                img = '$img', 
+                                max_people ='$max_people',
+                                max_bed ='$max_bed'
+                                WHERE type_id = '$type_id'";
                         pdo_execute($sql);
-                        $thongbao="Update thành công";
-                    }
+                        $thongbao = "Update thành công";
+                    
+                        // Ghi đè giá trị của $type_id sau khi thực hiện câu lệnh SQL
+                        $type_id = isset($type_id) ? $type_id : 0;  // Nếu $type_id chưa được đặt, đặt nó thành 0
+                    }}
                    $listdm=loadall_dm($keyw="",$type_id=0);
                 include "danhmuc/listdm.php";
                 break;
