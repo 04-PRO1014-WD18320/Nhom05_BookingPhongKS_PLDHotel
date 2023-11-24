@@ -20,6 +20,7 @@
             padding: 10px;
             font-size: 16px;
         }
+<<<<<<< HEAD
         #banner {
       width: 100%;
       margin: auto;
@@ -40,6 +41,8 @@
       width: 100%;
       height: auto;
     }
+=======
+>>>>>>> 49e73e72d30248f17d31a120fe644f60eea009f1
     </style>
 
 
@@ -53,7 +56,11 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#" style="width: 10%;"> <img
-                        src="/img/logo.png" alt="" style="width: 100%;"> </a>
+<<<<<<< HEAD
+                        /* src="/img/logo.png" alt="" style="width: 100%;"> </a> */
+=======
+                        src="/Nhom05_BookingPhongKS_PLDHotel/img/logo.png" alt="" style="width: 100%;"> </a>
+>>>>>>> 49e73e72d30248f17d31a120fe644f60eea009f1
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -94,7 +101,11 @@
                         <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                     </li> -->
                     </ul>
-                    <form class="d-flex" role="search" style=" margin-right: 30px;">
+<<<<<<< HEAD
+                    /* <form class="d-flex" role="search" style=" margin-right: 30px;"> */
+=======
+                    <form class="d-flex" role="search" style=" margin-right: 30px;" action="index.php?pg=datphong"  method="post">
+>>>>>>> 49e73e72d30248f17d31a120fe644f60eea009f1
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
@@ -106,6 +117,7 @@
         </nav>
 
 
+<<<<<<< HEAD
         <div id="banner">
             <div class="slider">
               <div class="slide">
@@ -141,6 +153,43 @@
             // Show the first slide initially
             showSlide(currentIndex);
           </script>
+=======
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/Nhom05_BookingPhongKS_PLDHotel/img/banner1.jpg" class="d-block" alt="..."
+                        style="width: 100%; height: 600px;">
+                </div>
+                <div class="carousel-item">
+                    <img src="/Nhom05_BookingPhongKS_PLDHotel/img/banner2.jfif" class="d-block" alt="..."
+                        style="width: 100%; height: 600px;">
+                </div>
+                <div class="carousel-item">
+                    <img src="/Nhom05_BookingPhongKS_PLDHotel/img/banner3.png" class="d-block" alt="..."
+                        style="width: 100%; height: 600px;">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class-hidden="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span><i class="fas fa-arrow-circle-left" style="font-size: 50px;"></i></span>
+
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class-hidden="carousel-control-next-icon" aria-hidden="true"></span>
+                <span><i class="fas fa-arrow-circle-right" style="font-size: 50px;"></i></span>
+            </button>
+        </div>
+>>>>>>> 49e73e72d30248f17d31a120fe644f60eea009f1
 
     </header>
     <!-- Kết thúc phần header -->
