@@ -12,7 +12,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
         
-            break;
+
         }
     }
 else{
