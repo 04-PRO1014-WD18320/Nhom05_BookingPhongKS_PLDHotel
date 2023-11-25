@@ -26,4 +26,10 @@ function delete_phong($id){
     $sql="delete from rooms where room_id=".$id;
     pdo_execute($sql);
 }
+function load_phong_cungdm($id,$type_id)
+{
+    $sql = "select * from rooms where type_id=".$type_id." AND id <>".$room_id;
+    $listp = pdo_query($sql);
+    return $listp;
+}
 ?>
