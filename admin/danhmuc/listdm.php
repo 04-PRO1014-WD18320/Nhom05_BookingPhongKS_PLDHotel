@@ -67,10 +67,16 @@
                                                 extract($danhmuc);
                                                 $suadm ="index.php?pg=suadm&id=".$type_id;
                                                 $xoadm ="index.php?pg=xoadm&id=".$type_id;
+                                                $hinhpath= $img;
+                                                if(is_file($hinhpath)){
+                                                    $hinh="<img src='".$hinhpath."' height='100' width ='100'>";
+                                                }else{
+                                                    $hinh="no photo";
+                                                }
                                                 echo'<tr>
                                                 <td>'.$type_id.'</td>
                                                 <td>'.$type_name.'</td>
-                                                <td>'.$img.'</td>
+                                                <td>'.$hinh.'</td>
                                                 <td>'.$max_people.'</td>
                                                 <td>'.$max_bed.'</td>
                                                 <td><a href ="'.$suadm.'"><input type="button" value="Sửa"></a> <a href ="'.$xoadm.'"><input type="button" onclick="return confirm(\'Bạn có chắc chắn muốn xóa\')" value="Xóa"> </a></td>
