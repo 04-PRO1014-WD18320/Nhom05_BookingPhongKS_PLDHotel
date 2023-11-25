@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <title>Danh sách phòng</title>
+    <title>Danh dịch vụ</title>
 
     <!-- Custom fonts for this template -->
     <link href="templatefree/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,7 +25,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Danh sách phòng</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Danh dịch vụ</h1>
                     <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p> -->
@@ -33,7 +33,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Danh sách phòng</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Danh dịch vụ</h6>
                             <a href="index.php?pg=themphong" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Thêm mới</a>
 
 
@@ -44,74 +44,32 @@
                                     <thead>
                                         <tr>
                                             <th>id</th>
-                                            <th>room_id</th>
-                                            <th>customer_name</th>
-                                            <th>id_number</th>
-                                            <th>email</th>
-                                            <th>checkin_date</th>
-                                            <th>checkout_date</th>
-                                            <th>trạng thái</th>
-                                            <th>note</th>
-                                            <th>created_at</th>
-                                            <th>button</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>id</th>
-                                            <th>room_id</th>
-                                            <th>customer_name</th>
-                                            <th>id_number</th>
-                                            <th>email</th>
-                                            <th>checkin_date</th>
-                                            <th>checkout_date</th>
-                                            <th>trạng thái</th>
-                                            <th>note</th>
-                                            <th>created_at</th>
-                                            <th>button</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                    <?php                    
-                foreach ($listdon as $don){
-                extract($don);
-                $suaphong="index.php?pg=suaphong&id=".$datphong_id;
-                $xoaphong="index.php?pg=xoaphong&id=".$datphong_id;
-                $cancel_booking="index.php?pg=cancel&id=".$datphong_id;
-                $checkin="index.php?pg=checkin&id=".$datphong_id;
-                $checkout="index.php?pg=checkout&id=".$datphong_id;
-                // $hinhpath= $img;
-                //chỉnh sửa trạng thái
-                if($checked_in==0){$trangthai='chưa check-in';}
-                else{if($checked_in==1){$trangthai='Đã Check-in';}
-                else{if($checked_in==3){$trangthai='đã hủy';}
-                else{$trangthai='Đã check-out';}
-                }}
-                //hiển thị nút
-                if ($checked_in == 1) {
-                    $btn = '<a href="' . $checkout . '"><input type="button" value="Check-out" onclick="return confirm(\'Xác nhận check-out\')"></a>  ';
-                } else {
-                    $btn = '<a href="' . $checkin . '"><input type="button" value="Check-in" onclick="return confirm(\'Xác nhận check-in\')"></a>  ';
-                }
-                echo '<tr>
-                <td>' . $datphong_id . '</td>
-                <td></td>
-                <td>' . $customer_name . '</td>
-                <td>' . $id_number . '</td>
-                <td>' . $email . '</td>
-                <td>' . $checkin_date . '</td>
-                <td>' . $checkout_date . '</td>
-                <td>' . $trangthai . '</td>
-                <td>' . $note . '</td>
-                <td>' . $created_at . '</td>
-               
-                <td>
-                 <a href="'.$xoaphong.'"><input type="button" value="Xóa" onclick="return confirm(\'Bạn có chắc muốn xóa\')"></a>
-                 ' . $btn . ' 
-                 <a href="' . $cancel_booking . '"><input type="button" value="Hủy đơn đặt"  onclick="return confirm(\'Xác nhận hủy\')"></a>
-                </td>
+                foreach ($listdv as $dv){
+                extract($dv);
+                $suaphong="index.php?pg=suaphong&id=".$service_id;
+                $xoaphong="index.php?pg=xoaphong&id=".$service_id;
+                echo ' <tr>
+                <td>'.$service_id.'</td>
+                <td>'.$service_name.'</td>
+                <td>'.$service_price.'</td>
+                <td><a href="'.$suaphong.'"><input type="button" value="Sửa"></a>  <a href="'.$xoaphong.'">
+                 <input type="button" value="Xóa" onclick="return confirm(\'Bạn có chắc muốn xóa\')"></a> </td>
             </tr>';
             }
+
             ?>
                                     </tbody>
                                 </table>
