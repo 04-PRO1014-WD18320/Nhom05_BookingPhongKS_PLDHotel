@@ -114,6 +114,7 @@
                         <a class="collapse-item" href="index.php?pg=dsphong">Thêm hình ảnh</a>
                         <a class="collapse-item" href="index.php?pg=listtk">Danh sách tài khoản</a>
                         <a class="collapse-item" href="index.php?pg=listdon">Danh sách đơn hàng</a>
+                        <a class="collapse-item" href="index.php?pg=listdv">Danh sách dịch vụ</a>
                         <a class="collapse-item" href="register.html">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                         <div class="collapse-divider"></div>
