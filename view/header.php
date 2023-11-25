@@ -53,7 +53,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#" style="width: 10%;"> <img
-                        src="/img/logo.png" alt="" style="width: 100%;"> </a>
+                        src="./img/logo.png" alt="" style="width: 100%;"> </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -109,13 +109,13 @@
         <div id="banner">
             <div class="slider">
               <div class="slide">
-                <img src="/img/banner1.jpg" alt="Image 1">
+                <img src="./img/banner1.jpg" alt="Image 1">
               </div>
               <div class="slide">
-                <img src="/img/banner2.jfif" alt="Image 2">
+                <img src="./img/banner2.jfif" alt="Image 2">
               </div>
               <div class="slide">
-                <img src="/img/banner3.png" alt="Image 3">
+                <img src="./img/banner3.png" alt="Image 3">
               </div>
             </div>
           </div>
