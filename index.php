@@ -64,8 +64,6 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             include "view/datphong/xacnhan.php";
         break;
         }
-       
->>>>>>> 49e73e72d30248f17d31a120fe644f60eea009f1
         }
 else{
     include "view/home.php";
