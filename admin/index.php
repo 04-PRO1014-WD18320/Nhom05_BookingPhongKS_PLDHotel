@@ -231,9 +231,23 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     $listdm=loadall_dm();
                     include "danhmuc/listdm.php";                     
                     break;
+                    
+                case "chitietphong":
+                    if(isset($_GET['id']) && ($_GET['id'])>0)
+                    {
+                     $id = $_GET['id'];
+                    $phong=loadone_phong($id);
+                    extract($phong);
+                    $phong_cungloai=load_phong_cungdm($id,$type_id);
+                    include "view/chitietphong.php";
+                     }
+                    else{
+                     include "admin/home.php";
+                    }
+                     break;
             }
-
-     } else{
+     }
+     else{
         include "home.php";
     }
     include "footer.php";

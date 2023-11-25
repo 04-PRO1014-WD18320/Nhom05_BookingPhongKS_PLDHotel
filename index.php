@@ -2,6 +2,7 @@
 session_start(); // Bắt đầu phiên
 include "view/header.php";
 include "model/pdo.php";
+include "model/phong.php";
 include "model/danhmuc.php";
 include "model/taikhoan.php";
 if(isset($_GET['pg'])&&($_GET['pg']!="")){
@@ -64,7 +65,9 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             include "view/datphong/xacnhan.php";
         break;
         }
+
         }
+    
 else{
     include "view/home.php";
 }

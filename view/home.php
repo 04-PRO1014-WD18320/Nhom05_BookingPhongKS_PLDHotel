@@ -80,7 +80,7 @@
                   <div class="col-md-1">
                  <button type="button" class="btn btn-success">Tìm Phòng</button></div>
                 <div class="col-md-6" style="margin-top: 30px;">
-                    <img src="/Nhom05_BookingPhongKS_PLDHotel/img/img1.jpg" class="mx-auto d-block" alt="" width="80%">
+                    <img src="./img./img1.jpg" class="mx-auto d-block" alt="" width="80%">
                 </div>
                 <div class="col-md-6" style="margin-bottom: 40px;">
 
@@ -136,7 +136,7 @@
                 </div>
                 <div style="text-align: center;" class="col-md-4">
 
-                    <a href="#"><img src="/Nhom05_BookingPhongKS_PLDHotel/img/view1.jpg"
+                    <a href="#"><img src="./img/view1.jpg"
                             style="width: 100%; height: 80%;" alt=""></a>
                     <div style="background-color: #d6c08a;" class="text p-3 text-center">
                         <h3 class="mb-3"><a style="color: black;" href="type_id">Luxury Room</a></h3>
@@ -148,7 +148,7 @@
                 </div>
                 <div style="text-align: center;" class="col-md-4">
 
-                    <a href="#"><img src="/Nhom05_BookingPhongKS_PLDHotel/img/view1.jpg"
+                    <a href="#"><img src="./img/view1.jpg"
                             style="width: 100%; height: 80%;" alt=""></a>
                     <div style="background-color: #d6c08a;" class="text p-3 text-center">
                         <h3 class="mb-3"><a style="color: black;" href="type_id">Luxury Room</a></h3>
@@ -160,7 +160,7 @@
                 </div>
                 <div style="text-align: center;" class="col-md-4">
 
-                    <a href="#"><img src="/Nhom05_BookingPhongKS_PLDHotel/img/view1.jpg"
+                    <a href="#"><img src="./img/view1.jpg"
                             style="width: 100%; height: 80%;" alt=""></a>
                     <div style="background-color: #d6c08a;" class="text p-3 text-center">
                         <h3 class="mb-3"><a style="color: black;" href="type_id">Luxury Room</a></h3>
@@ -175,7 +175,7 @@
             <div class="row" style="margin-top: 200px;">
                 <div style="text-align: center;" class="col-md-4">
 
-                    <a href="#"><img src="/Nhom05_BookingPhongKS_PLDHotel/img/view1.jpg"
+                    <a href="#"><img src="./img/view1.jpg"
                             style="width: 100%; height: 80%;" alt=""></a>
                     <div style="background-color: #d6c08a;" class="text p-3 text-center">
                         <h3 class="mb-3"><a style="color: black;" href="type_id">Luxury Room</a></h3>
@@ -187,7 +187,7 @@
                 </div>
                 <div style="text-align: center;" class="col-md-4">
 
-                    <a href="#"><img src="/Nhom05_BookingPhongKS_PLDHotel/img/view1.jpg"
+                    <a href="#"><img src="./img/view1.jpg"
                             style="width: 100%; height: 80%;" alt=""></a>
                     <div style="background-color: #d6c08a;" class="text p-3 text-center">
                         <h3 class="mb-3"><a style="color: black;" href="type_id">Luxury Room</a></h3>
@@ -196,10 +196,10 @@
                         <p class="pt-1"><a href="Book" class="btn-custom">Book Now<span
                                     class="icon-long-arrow-right"></span></a></p>
                     </div>
-                </div>
+                </div>  
                 <div style="text-align: center;" class="col-md-4">
 
-                    <a href="#"><img src="/Nhom05_BookingPhongKS_PLDHotel/img/view1.jpg"
+                    <a href="#"><img src="./img/view1.jpg"
                             style="width: 100%; height: 80%;" alt=""></a>
                     <div style="background-color: #d6c08a;" class="text p-3 text-center">
                         <h3 class="mb-3"><a style="color: black;" href="type_id">Luxury Room</a></h3>
