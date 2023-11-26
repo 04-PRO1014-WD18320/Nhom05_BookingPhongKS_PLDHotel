@@ -151,7 +151,7 @@
                     <p>Beds: 2</p>
                     <p>People: 4</p> -->
                     <?php
-                    foreach ($phong_cungloai as $p) {
+                    foreach ($list_p as $p) {
                         extract($p);
                         $linkp="index.php?pg=chitietphong&id=".$id;
                         echo '<li><a href="'.$linkp.'">'.$room_name.'</a></li>';
