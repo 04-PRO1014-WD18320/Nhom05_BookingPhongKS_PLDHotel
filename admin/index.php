@@ -3,10 +3,46 @@ include "header.php";
 include "../model/pdo.php";
 include "../model/phong.php";
 include "../model/danhmuc.php";
-
+include "../model/taikhoan.php";
 if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
+        case "listdv":
+            $sql="SELECT * FROM `service` WHERE 1";
+            $listdv=pdo_query($sql);
+            include "dichvu/listdv.php";
+            break;
+        case "listdon":
+            $sql="SELECT * FROM `datphong` WHERE 1";
+            $listdon=pdo_query($sql);
+            include "dondat/listdon.php";
+            break;
+        case "checkin":
+            $bookingId = $_GET["id"];
+            $sql = "UPDATE datphong SET checked_in = 1 WHERE datphong_id = $bookingId";
+            pdo_execute($sql);
+            $sql="SELECT * FROM `datphong` WHERE 1";
+            $listdon=pdo_query($sql);
+            include "dondat/listdon.php";
+            break;
+        case "checkout":
+            $bookingId = $_GET["id"];
+            $sql = "UPDATE datphong SET checked_in = 4 WHERE datphong_id = $bookingId";
+            pdo_execute($sql);
+            $sql="SELECT * FROM `datphong` WHERE 1";
+            $listdon=pdo_query($sql);
+            $sql="SELECT * FROM `service` WHERE 1";
+            $listdv=pdo_query($sql);
+            include "dondat/checkout_form.php";
+            break;
+        case "cancel":
+            $bookingId = $_GET["id"];
+            $sql = "UPDATE datphong SET checked_in = 3 WHERE datphong_id = $bookingId";
+            pdo_execute($sql);
+            $sql="SELECT * FROM `datphong` WHERE 1";
+            $listdon=pdo_query($sql);
+            include "dondat/listdon.php";
+            break;
         case "dsphong":
             $listphong=loadall_phong($keyw="",$type_id=0);
             include "phong/danhsachphong.php";
