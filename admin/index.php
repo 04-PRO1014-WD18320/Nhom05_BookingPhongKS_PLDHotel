@@ -65,7 +65,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 
                 if ($img_error === 0) {
                     // Di chuyển tệp tạm thời đến một địa chỉ cụ thể trên máy chủ
-                    $img_destination = '../upload/' . $img_name;
+                    $img_destination = './upload/' . $img_name;
                     move_uploaded_file($img_tmp_name, $img_destination);
     
                     insert_phong($room_name,$img_destination,$description,$room_price,$type_id,$Trangthai);
