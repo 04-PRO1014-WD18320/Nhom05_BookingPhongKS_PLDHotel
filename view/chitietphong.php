@@ -121,10 +121,10 @@
 
 
 
-<div class="container mt-4">
+    <div class="container mt-4">
     <div class="row">
         <!-- Bên trái - Chi tiết phòng -->
-        <div class="col-md-8">
+<div class="col-md-8">
             <div class="card">
             <?php extract($phong);?>
                 <?php
@@ -151,9 +151,9 @@
                     <p>Beds: 2</p>
                     <p>People: 4</p> -->
                     <?php
-                    foreach ($list_p as $p) {
+                    foreach ($listp as $p) {
                         extract($p);
-                        $linkp="index.php?pg=chitietphong&id=".$id;
+                        $linkp="index.php?pg=chitietphong&id=".$room_id;
                         echo '<li><a href="'.$linkp.'">'.$room_name.'</a></li>';
 
                     }
@@ -164,6 +164,7 @@
         </div>
     </div>
 </div>
+
 
 
 

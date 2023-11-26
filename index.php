@@ -68,8 +68,8 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
         case 'chitietphong':
             // xem chi tiết sản phẩm
             if (isset($_GET['id']) && ($_GET['id'] > 0)) {
-                $id = $_GET['idsp'];
-                $phong =loadone_phong($id)
+                $id = $_GET['id'];
+                $phong =loadone_phong($id);
                 extract($phong);
                 $listp = load_phong_cungdm($id,$type_id);
                 include "view/chitietphong.php";

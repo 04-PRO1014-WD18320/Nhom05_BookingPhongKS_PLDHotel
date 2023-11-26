@@ -28,7 +28,7 @@ function delete_phong($id){
 }
 function load_phong_cungdm($id,$type_id)
 {
-    $sql = "select * from rooms where type_id=".$type_id." AND id <>".$room_id;
+    $sql = "select * from rooms where type_id=".$type_id." AND room_id <>".$id;
     $listp = pdo_query($sql);
     return $listp;
 }
