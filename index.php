@@ -1,10 +1,11 @@
 <?php
-session_start(); // Bắt đầu phiên
+ session_start(); // Bắt đầu phiên
 include "view/header.php";
 include "model/pdo.php";
-include "model/phong.php";
 include "model/danhmuc.php";
 include "model/taikhoan.php";
+include "model/phong.php";
+$listphong=loadall_phong($keyw="",$type_id=0);
 if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
@@ -17,6 +18,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             }
             else{
             $user=loadone_taikhoan($_SESSION["idPerson"]);
+            $phong=loadone_phong($_GET['id']);
             $sql="SELECT * FROM type_room WHERE 1";
             $listdanhmuc=  pdo_query($sql);
            include "view/datphong/datphong.php";}
@@ -31,10 +33,12 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 $checkoutDate=$_POST['ngay_di'];
                 $note=$_POST['ghi_chu'];
                 $gia=$_POST['tong_gia'];
-                $sql = "INSERT INTO datphong ( customer_name,id_number, email, checkin_date, checkout_date,note) 
-                VALUES ( '$customerName','$id_number','$email', '$checkinDate', '$checkoutDate','$note')";
+                $room_id=$_POST['id'];
+                $sql = "INSERT INTO datphong ( room_id,customer_name,id_number, email, checkin_date, checkout_date,note) 
+                VALUES ('$room_id','$customerName','$id_number','$email', '$checkinDate', '$checkoutDate','$note')";
                 pdo_execute($sql);
-
+                $sql2="INSERT INTO `booking_detail`(`room_id`, `booking_id`, `start_date`, `end_date`, `into_money`) 
+                VALUES ('$room_id','[value-3]','[value-4]','[value-5]','[value-6]')";
                 $_SESSION['confirmation_info'] = array(
                     'customer_name' => $customerName,
                     'id_number' => $id_number,
@@ -63,8 +67,9 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             $thongbao="đặt phòng thành công";
             }
             include "view/datphong/xacnhan.php";
-        break;
+        break; 
         }
+       
         case 'chitietphong':
             // xem chi tiết sản phẩm
             if (isset($_GET['id']) && ($_GET['id'] > 0)) {
@@ -76,10 +81,8 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             } else {
                 include "view/home.php";
             }
-            break;
-
-        }
-    
+            break;     
+           }
 else{
     include "view/home.php";
 }

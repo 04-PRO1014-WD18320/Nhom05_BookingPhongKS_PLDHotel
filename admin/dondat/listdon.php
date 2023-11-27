@@ -80,6 +80,7 @@
                 $cancel_booking="index.php?pg=cancel&id=".$datphong_id;
                 $checkin="index.php?pg=checkin&id=".$datphong_id;
                 $checkout="index.php?pg=checkout&id=".$datphong_id;
+                $chitiet="index.php?pg=chitietdon&id=".$datphong_id;
                 // $hinhpath= $img;
                 //chỉnh sửa trạng thái
                 if($checked_in==0){$trangthai='chưa check-in';}
@@ -95,7 +96,7 @@
                 }
                 echo '<tr>
                 <td>' . $datphong_id . '</td>
-                <td></td>
+                <td>'.$room_id.'</td>
                 <td>' . $customer_name . '</td>
                 <td>' . $id_number . '</td>
                 <td>' . $email . '</td>
@@ -106,8 +107,10 @@
                 <td>' . $created_at . '</td>
                
                 <td>
+                '.$btn.'
+               
+                 <a href="' . $chitiet . '"><input type="button" value="xem chi tiết"  onclick="return confirm(\'Xác nhận hủy\')"></a>
                  <a href="'.$xoaphong.'"><input type="button" value="Xóa" onclick="return confirm(\'Bạn có chắc muốn xóa\')"></a>
-                 ' . $btn . ' 
                  <a href="' . $cancel_booking . '"><input type="button" value="Hủy đơn đặt"  onclick="return confirm(\'Xác nhận hủy\')"></a>
                 </td>
             </tr>';
