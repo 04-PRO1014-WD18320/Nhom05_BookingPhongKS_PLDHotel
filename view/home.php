@@ -105,26 +105,26 @@
 
 
                 <div class="col-md-3">
-                    <i style="font-size: 50px; padding-left: 100px; padding-bottom: 10px;" class="fas fa-bell"></i> <br>
+                    <i style="font-size: 50px; padding-left: 130px; padding-bottom: 10px;" class="fas fa-bell"></i> <br>
                     <p class="h2 text-center">phục vụ 25/7</p>
                     <p style="text-align: center;" class="text-muted">A small river named Duden flows by their place and
                         supplies.</p>
                 </div>
                 <div class="col-md-3">
-                    <i style="font-size: 50px; padding-left: 100px; padding-bottom: 10px;" class="fas fa-taxi"></i> <br>
+                    <i style="font-size: 50px; padding-left: 130px; padding-bottom: 10px;" class="fas fa-taxi"></i> <br>
                     <p class="h2 text-center">Đồ ăn ngon</p>
                     <p style="text-align: center;" class="text-muted">A small river named Duden flows by their place and
                         supplies.</p>
                 </div>
                 <div class="col-md-3">
-                    <i style="font-size: 50px; padding-left: 100px; padding-bottom: 10px;" class="fas fa-utensils"></i>
+                    <i style="font-size: 50px; padding-left: 130px; padding-bottom: 10px;" class="fas fa-utensils"></i>
                     <br>
                     <p class="h2 text-center">Đưa đón tận nơi</p>
                     <p style="text-align: center;" class="text-muted">A small river named Duden flows by their place and
                         supplies.</p>
                 </div>
                 <div class="col-md-3">
-                    <i style="font-size: 50px; padding-left: 100px; padding-bottom: 10px;" class="fas fa-hot-tub"></i>
+                    <i style="font-size: 50px; padding-left: 130px; padding-bottom: 10px;" class="fas fa-hot-tub"></i>
                     <br>
                     <p class="h2 text-center">Spa</p>
                     <p style="text-align: center;" class="text-muted">A small river named Duden flows by their place and
@@ -133,6 +133,31 @@
 
                 <div class="col-md-12" style="margin-top: 60px;margin-bottom: 20px;">
                     <h2 style="text-align: center;">PHÒNG</h2>
+                </div>
+                <div class="container mt-4">
+
+                <div class="dropdown" style="padding-bottom:30px;">
+                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Danh mục
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <?php 
+                                foreach ($dsdm as $dm) {
+                                    extract($dm);
+                                    
+                                    $linkdm = "index.php?pg=danhsach&iddm=".$type_id; 
+                                    
+                                    echo '
+                                        <li><a class="dropdown-item" href="'.$linkdm.'">'.$type_name.'</a></li>
+                                    ';
+                                }
+                            ?>
+                    <!-- <li><a class="dropdown-item" href="#">Mục 2</a></li>
+                    <li><a class="dropdown-item" href="#">Mục 3</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Mục khác</a></li> -->
+                    </ul>
+                </div>
                 </div>
                 <?php
                  foreach ($listphong as $room){
