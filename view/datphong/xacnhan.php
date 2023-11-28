@@ -37,7 +37,10 @@
         </div>
 
         <p class="mt-4">Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi.</p>
-        <a href="thanh-toan.php" class="btn btn-success mt-4">Tiến hành thanh toán</a>
+        <form class="" method="POST" target="_blank" enctype="application/x-www-form-urlencoded"
+                          action="view/datphong/xulythanhtoan.php">
+        <a href="view/datphong/xulythanhtoan.php" class="btn btn-success mt-4">Tiến hành thanh toán</a>
+        </form>
         <a href="index.php" class="btn btn-primary mt-4">Quay lại Trang Chủ</a>
     </div>
 </body>

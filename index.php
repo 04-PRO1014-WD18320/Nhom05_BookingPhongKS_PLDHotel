@@ -38,7 +38,8 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 $sql = "INSERT INTO datphong ( room_id,customer_name,id_number, email, checkin_date, checkout_date,note) 
                 VALUES ('$room_id','$customerName','$id_number','$email', '$checkinDate', '$checkoutDate','$note')";
                 pdo_execute($sql);
-
+                $sql2="INSERT INTO `booking_detail`(`room_id`, `booking_id`, `start_date`, `end_date`, `into_money`) 
+                VALUES ('$room_id','[value-3]','[value-4]','[value-5]','[value-6]')";
                 $_SESSION['confirmation_info'] = array(
                     'customer_name' => $customerName,
                     'id_number' => $id_number,
@@ -74,9 +75,25 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             $phong=pdo_query($sql);
             include "view/danhsach.php";
             break;
-        }
+
        
-        }
+        case 'chitietphong':
+            // xem chi tiết sản phẩm
+            if (isset($_GET['id']) && ($_GET['id'] > 0)) {
+            $id = $_GET['id'];
+            $phong =loadone_phong($id);
+            extract($phong);
+            $listp = load_phong_cungdm($id,$type_id);
+            }
+            include "view/chitietphong.php";
+            break;
+
+            
+             else {
+                include "view/home.php";
+            }
+    }
+}
 else{
     include "view/home.php";
 }
