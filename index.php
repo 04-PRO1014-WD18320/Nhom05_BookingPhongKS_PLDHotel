@@ -6,6 +6,7 @@ include "model/danhmuc.php";
 include "model/taikhoan.php";
 include "model/phong.php";
 $listphong=loadall_phong($keyw="",$type_id=0);
+$dsdm=loadall_dm($keyw="",$type_id=0);
 if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
@@ -68,6 +69,13 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             }
             include "view/datphong/xacnhan.php";
         break; 
+        case "danhsach":
+            $iddm=$_GET['iddm'];
+            $sql="select * from rooms where type_id=".$iddm;
+            $phong=pdo_query($sql);
+            include "view/danhsach.php";
+            break;
+
        
         case 'chitietphong':
             // xem chi tiết sản phẩm
