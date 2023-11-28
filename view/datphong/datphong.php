@@ -2,6 +2,7 @@
 
 ?>
 <form action="index.php?pg=booking" method="post" class="container mt-5">
+    <input type="hidden" name="price" value="<?=$phong['room_price'];?>" id="price">
     <div class="form-group">
         <label for="ten">Họ và Tên:</label>
         <input type="text" id="ten" name="ten" class="form-control"value="<?=$user['full_name']?>" required>
@@ -14,7 +15,11 @@
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" class="form-control" value="<?=$user['email']?>" required>
     </div>
-
+    <div class="form-group">
+        <label for="ten">Tên phòng</label>
+        <input type="text" id="ten" name="ten" class="form-control"value="<?=$phong['room_name']?>" required>
+        <input type="hidden" name="id" value="<?=$phong['room_id']?>">
+    </div>
     <div class="form-group">
         <label for="ngay_den">Ngày Đến:</label>
         <input type="date" id="ngay_den" name="ngay_den" class="form-control" required>
@@ -79,14 +84,13 @@
     function tinhTongGia() {
     var ngayDen = document.getElementById("ngay_den").value;
     var ngayDi = document.getElementById("ngay_di").value;
-
+    var giaphong=document.getElementById("price").value;
     var dateNgayDen = new Date(ngayDen);
     var dateNgayDi = new Date(ngayDi);
 
     var soNgay = Math.ceil((dateNgayDi - dateNgayDen) / (1000 * 60 * 60 * 24));
     var giaMoiNgay = 100;
-
-    var tongGia = soNgay * giaMoiNgay;
+    var tongGia = soNgay * parseInt(giaphong);
 
     // Thiết lập giá trị của trường input hidden
     document.getElementById("tong_gia").value = tongGia;

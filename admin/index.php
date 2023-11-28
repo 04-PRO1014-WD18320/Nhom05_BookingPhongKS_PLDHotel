@@ -8,31 +8,48 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
         case "listdv":
-            $sql="SELECT * FROM `service` WHERE 1";
+            $sql="SELECT * FROM `service` WHERE 1  order by service_id desc";
             $listdv=pdo_query($sql);
             include "dichvu/listdv.php";
             break;
         case "listdon":
-            $sql="SELECT * FROM `datphong` WHERE 1";
+            $sql="SELECT * FROM `datphong` WHERE 1  order by datphong_id desc";
             $listdon=pdo_query($sql);
             include "dondat/listdon.php";
             break;
+        case "chitietdon":
+            $sql="SELECT * FROM `booking_detail` WHERE booking_id =".$_GET['id'];
+            $list= pdo_query($sql);
+            include "dondat/chitietdon.php";
+            break;
         case "checkin":
             $bookingId = $_GET["id"];
-            $sql = "UPDATE datphong SET checked_in = 1 WHERE datphong_id = $bookingId";
+            $sql1="select room_id from datphong where datphong_id =".$bookingId;
+            $room_id=pdo_query_value($sql1);
+            $sql = "UPDATE datphong SET checked_in = 1 WHERE datphong_id =".$bookingId;
             pdo_execute($sql);
-            $sql="SELECT * FROM `datphong` WHERE 1";
-            $listdon=pdo_query($sql);
+            $insertBookingDetail = "INSERT INTO booking_detail (room_id, Booking_id, start_date) 
+            VALUES ($room_id, $bookingId, NOW())";
+            pdo_execute($insertBookingDetail);
+            $sqlds="SELECT * FROM `datphong` WHERE 1  order by datphong_id desc";
+            $listdon=pdo_query($sqlds);
             include "dondat/listdon.php";
             break;
         case "checkout":
             $bookingId = $_GET["id"];
-            $sql = "UPDATE datphong SET checked_in = 4 WHERE datphong_id = $bookingId";
-            pdo_execute($sql);
-            $sql="SELECT * FROM `datphong` WHERE 1";
-            $listdon=pdo_query($sql);
-            $sql="SELECT * FROM `service` WHERE 1";
-            $listdv=pdo_query($sql);
+            $sql1 = "UPDATE datphong SET checked_in = 4 WHERE datphong_id = $bookingId";
+            $sql="select * from datphong where datphong_id=".$bookingId ;
+            $donhang=pdo_query($sql);
+            $sql4="SELECT * FROM `booking_detail` WHERE booking_id=".$bookingId;
+            $check_don=pdo_query_one($sql4);
+            $sql2="SELECT * FROM `datphong` WHERE 1  order by datphong_id desc";
+            $listdon=pdo_query($sql2);
+            $sql3="SELECT * FROM `service` WHERE 1  order by service_id desc";
+            $listdv=pdo_query($sql3);
+            $insertBookingDetail = "UPDATE  booking_detail SET end_date =NOW() where booking_id =".$bookingId;
+            pdo_execute($insertBookingDetail);
+            $sql5="select room_price from rooms join booking_detail ON rooms.room_id = booking_detail.room_id where booking_detail.booking_id =".$bookingId;
+            $room_price=pdo_query_value($sql5);
             include "dondat/checkout_form.php";
             break;
         case "cancel":
@@ -133,7 +150,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 $oldimg = $_POST["oldimg"];
                 // Xử lý ảnh nếu có được chọn
                 if (!empty($_FILES['img']['tmp_name']))  {
-                    $upload_dir = "upload/"; // Thư mục lưu trữ ảnh
+                    $upload_dir = "../upload/"; // Thư mục lưu trữ ảnh
                     $img_path = $upload_dir . basename($_FILES['img']['name']);
                     move_uploaded_file($_FILES['img']['tmp_name'], $img_path);
                     $img=$img_path;
