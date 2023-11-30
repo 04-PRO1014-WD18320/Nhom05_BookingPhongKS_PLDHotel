@@ -12,8 +12,8 @@ function loadall_dm($keyw="",$type_id=0){
     $listdm=pdo_query($sql);
     return  $listdm;
 }
-function insert_danhmuc($type_name,$img_destination,$max_people,$max_bed){
-    $sql="INSERT INTO type_room(type_name,img,max_people,max_bed) VALUES ('$type_name','$img_destination','$max_people','$max_bed')";
+function insert_danhmuc($type_name,$img,$max_people,$max_bed){
+    $sql="INSERT INTO type_room(type_name,img,max_people,max_bed) VALUES ('$type_name','$img','$max_people','$max_bed')";
     pdo_execute($sql);
 }
 function delete_dm($id){
