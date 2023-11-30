@@ -369,7 +369,7 @@
                 function confirmLogout() {
                 var isConfirmed = window.confirm("Bạn có chắc chắn muốn đăng xuất?");
                 if (isConfirmed) {
-                window.location.href = "../view/taikhoan/dangnhap.php";
+                window.location.href = "../controller/logout.php";
                 }
                 // Người dùng chọn "Hủy", không thực hiện chuyển hướng
                 }

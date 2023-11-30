@@ -98,10 +98,20 @@
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
-                    <button type="button" class="btn btn-secondary" style=" margin-right: 30px;">Đăng nhập</button>
+                    <?php
 
-                    <button type="button" class="btn btn-success">Đăng kí</button>
 
+
+// Kiểm tra xem session 'user_id' có tồn tại hay không
+if (isset($_SESSION['idPerson'])) {
+    // Nếu đã đăng nhập
+     echo '<button type="button" class="btn btn-danger" style="margin-right: 30px;"><a href="controller/logout.php" style="color: white;">Đăng xuất</a></button>';
+} else {
+    // Nếu chưa đăng nhập
+    echo '<button type="button" class="btn btn-primary" style="margin-right: 30px;"><a href="view/taikhoan/dangnhap.php" style="color: white;">Đăng nhập</a></button>';
+    echo '<button type="button" class="btn btn-success"><a href="view/taikhoan/dangky.php" style="color: white;">Đăng ký</a></button>';
+}
+?>
                 </div>
         </nav>
 

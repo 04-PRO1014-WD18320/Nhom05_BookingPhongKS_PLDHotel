@@ -17,8 +17,6 @@
                     $passWord = $_POST["pass"]; 
                     // $active = 1;
                     $role = 3;
-
-                    
                     // var_dump($_FILES);
                     $query = "insert into users(phone_number, username, password, role, email) values ('$sdt','$userName', '$passWord', '$role','$email')";
                     pdo_execute($query);
