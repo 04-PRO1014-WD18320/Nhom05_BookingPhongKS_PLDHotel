@@ -41,7 +41,7 @@
                           action="view/datphong/xulythanhtoan.php">
         <a href="view/datphong/xulythanhtoan.php" class="btn btn-success mt-4">Tiến hành thanh toán</a>
         </form>
-        <a href="index.php" class="btn btn-primary mt-4">Quay lại Trang Chủ</a>
+        <a href="../index.php" class="btn btn-primary mt-4">Quay lại Trang Chủ</a>
     </div>
 </body>
 </html>

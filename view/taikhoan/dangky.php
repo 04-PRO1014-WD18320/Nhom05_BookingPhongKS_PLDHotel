@@ -1,7 +1,6 @@
 <?php
         include_once(__DIR__ . '/../../model/pdo.php');
         include_once (__DIR__ . '/../../controller/signup.php'); 
-        var_dump($username);
     ?>
 <!DOCTYPE html>
 <html lang="en">

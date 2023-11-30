@@ -69,7 +69,7 @@
                 extract($room);
                 $suaphong="index.php?pg=suaphong&id=".$room_id;
                 $xoaphong="index.php?pg=xoaphong&id=".$room_id;
-                $hinhpath= $img;
+                $hinhpath= "../upload/".$img;
                 if(is_file($hinhpath)){
                     $hinh="<img src='".$hinhpath."' height='200'>";
                 }else{

@@ -1,84 +1,49 @@
 <main>
-        <div class="container" style="margin-top: 30px;">
-            <div class="row">
+<div class="container" style="margin-top: 30px;">
+
+<form action="index.php?pg=timphong" method="post">
+<div class="row">
+          
                 <!-- Input Check-in -->
-                
                 <div class="col-md-3">
-                <label for="checkin">Check-in:</label>
-                <input type="text" id="checkin" class="datepicker" readonly>
-                    </div>
+                    <label for="checkin">Check-in:</label>
+                    <input type="date" id="checkin" name="checkin" class="form-control" required>
+                </div>
+
                 <!-- Input Check-out -->
                 <div class="col-md-3">
-                <label for="checkout">Check-out:</label>
-                <input type="text" id="checkout" class="datepicker" readonly>
-                    </div>
-                <script>
-                    $(document).ready(function () {
-                        var checkinDate;
+                    <label for="checkout">Check-out:</label>
+                    <input type="date" id="checkout" name="checkout" class="form-control" required>
+                </div>
 
-                        // Kích hoạt datepicker cho input check-in
-                        $("#checkin").datepicker({
-                            onSelect: function (selectedDate) {
-                                checkinDate = new Date(selectedDate);
-                                $("#checkout").datepicker("option", "minDate", checkinDate); // Đặt ngày tối thiểu cho ngày check-out
-                                $("#checkin").val(selectedDate);
-                            }
-                        });
-
-                        // Kích hoạt datepicker cho input check-out
-                        $("#checkout").datepicker({
-                            onSelect: function (selectedDate) {
-                                var checkoutDate = new Date(selectedDate);
-                                if (checkoutDate < checkinDate) {
-                                    alert("Ngày check-out không thể trước ngày check-in!");
-                                    $("#checkout").val(""); // Xóa giá trị nếu không hợp lệ
-                                } else {
-                                    $("#checkout").val(selectedDate);
-                                }
-                            }
-                        });
-                    });
-                </script>
-                
                 <div class="col-md-3">
-                 <label for="roomType">Thể loại phòng:</label><br>
-                 <select id="roomType" class="dropdown" onchange="updateRoomType()">
-                     <option value="single">Phòng đơn</option>
-                     <option value="double">Phòng đôi</option>
-                     <option value="suite">Suite</option>
-                 </select>
-             </div>
-                 <!-- Dropdown Số lượng người -->
-                 <div class="col-md-2">
-                 <label for="guests">Số lượng người:</label><br>
-                 <select id="guests" class="dropdown" onchange="updateGuestCount()">
-                     <option value="1">1 người</option>
-                     <option value="2">2 người</option>
-                     <option value="3">3 người</option>
-                     <option value="4">4 người</option>
-                 </select>
-             </div>
-                 <!-- Các ô nhập liệu để lưu giá trị đã chọn -->
-                 <!-- <input type="text" id="selectedRoomType" readonly>
-                 <input type="text" id="selectedGuestCount" readonly> -->
-             
-                 <script>
-                     // Hàm được gọi khi giá trị thể loại phòng thay đổi
-                     function updateRoomType() {
-                         var roomType = document.getElementById("roomType");
-                         var selectedRoomType = roomType.options[roomType.selectedIndex].text;
-                         document.getElementById("selectedRoomType").value = selectedRoomType;
-                     }
-             
-                     // Hàm được gọi khi giá trị số lượng người thay đổi
-                     function updateGuestCount() {
-                         var guests = document.getElementById("guests");
-                         var selectedGuestCount = guests.options[guests.selectedIndex].text;
-                         document.getElementById("selectedGuestCount").value = selectedGuestCount;
-                     }
-                 </script>
-                  <div class="col-md-1">
-                 <button type="button" class="btn btn-success">Tìm Phòng</button></div>
+                    <label for="roomType">Thể loại phòng:</label><br>
+                    <select id="roomType" name="roomType" class="form-control" onchange="updateRoomType()">
+                        <?php 
+                        foreach ($dsdm as $dm) {
+                            extract($dm);
+                            echo '<option value="'. $type_id .'">'.$type_name.'</option>';
+                        }
+                        ?> 
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="guests">Số lượng người:</label><br>
+                    <select id="guests" name="guests" class="form-control" onchange="updateGuestCount()">
+                        <option value="1">1 người</option>
+                        <option value="2">2 người</option>
+                        <option value="3">3 người</option>
+                        <option value="4">4 người</option>
+                    </select>
+                </div>
+
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-success">Tìm Phòng</button>
+                </div>
+          
+                
+    </form>
                 <div class="col-md-6" style="margin-top: 30px;">
                     <img src="/Nhom05_BookingPhongKS_PLDHotel/img/img1.jpg" class="mx-auto d-block" alt="" width="80%">
                 </div>
@@ -160,25 +125,85 @@
                 </div>
                 </div>
                 <?php
+               
                  foreach ($listphong as $room){
+                  
                     extract($room);
+                    $img_path="upload/".$img;
                     $ctphong="index.php?pg=chitietphong&id=".$room_id;
-              echo'  <div style="text-align: center;" class="col-md-4">
+                    $datphong="index.php?pg=datphong&id=".$room_id;
+                    if($Trangthai==2){
+                        $btn='<span
+                        class="icon-long-arrow-right"style="display: inline-block; background-color: red; color: white; padding: 10px 20px; border-radius: 5px;">Hết phòng</span>';
+                    }
+                    else{
+                        $btn='<a href="'.$datphong.'" style="display: inline-block; padding: 10px 20px; background-color: #3498db;
+                         color: #ffffff; text-decoration: none; border-radius: 5px;
+                         transition: background-color 0.3s ease;"><span style="margin-left: 5px;">Book Now</span></a>';
+                    }
+              echo'  <div style="text-align: center;padding: 10px;" class="col-md-4">
 
-                    <a href="'.$ctphong.'"><img src="'.$img.'"
-                            style="width: 200px; height: 200px;" alt=""></a>
+                    <a href="'.$ctphong.'"><img src="'.$img_path.'"
+                            style="width: 100%; height: 300px;" alt=""></a>
                     <div style="background-color: #d6c08a;" class="text p-3 text-center">
                         <h3 class="mb-3"><a style="color: black;" href="type_id">'.$room_name.'</a></h3>
                         <p><span class="price mr-2">'.$room_price.'</span> <span class="per">per night</span></p>
                         <hr>
-                        <p class="pt-1"><a href="Book" class="btn-custom">Book Now<span
-                                    class="icon-long-arrow-right"></span></a></p>
+                        <p class="pt-1">'.$btn.'</p>
                     </div>
                 </div>';
                  }
                 ?>
             </div>
         </div>
+        </div>
+        </div>
     </main>
 
     <!-- Kết thúc phần main -->
+    <script>
+                    $(document).ready(function () {
+                        var checkinDate;
+
+                        // Kích hoạt datepicker cho input check-in
+                        $("#checkin").datepicker({
+                            onSelect: function (selectedDate) {
+                                checkinDate = new Date(selectedDate);
+                                $("#checkout").datepicker("option", "minDate", checkinDate); // Đặt ngày tối thiểu cho ngày check-out
+                                $("#checkin").val(selectedDate);
+                            }
+                        });
+
+                        // Kích hoạt datepicker cho input check-out
+                        $("#checkout").datepicker({
+                            onSelect: function (selectedDate) {
+                                var checkoutDate = new Date(selectedDate);
+                                if (checkoutDate < checkinDate) {
+                                    alert("Ngày check-out không thể trước ngày check-in!");
+                                    $("#checkout").val(""); // Xóa giá trị nếu không hợp lệ
+                                } else {
+                                    $("#checkout").val(selectedDate);
+                                }
+                            }
+                        });
+                    });
+                </script>
+                <!-- Các ô nhập liệu để lưu giá trị đã chọn -->
+                 <!-- <input type="text" id="selectedRoomType" readonly>
+                 <input type="text" id="selectedGuestCount" readonly> -->
+             
+                 <script>
+                     // Hàm được gọi khi giá trị thể loại phòng thay đổi
+                     function updateRoomType() {
+                         var roomType = document.getElementById("roomType");
+                         var selectedRoomType = roomType.options[roomType.selectedIndex].text;
+                         document.getElementById("selectedRoomType").value = selectedRoomType;
+                     }
+             
+                     // Hàm được gọi khi giá trị số lượng người thay đổi
+                     function updateGuestCount() {
+                         var guests = document.getElementById("guests");
+                         var selectedGuestCount = guests.options[guests.selectedIndex].text;
+                         document.getElementById("selectedGuestCount").value = selectedGuestCount;
+                     }
+                 </script>
