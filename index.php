@@ -88,10 +88,6 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             include "view/chitietphong.php";
             break;
 
-            
-             else {
-                include "view/home.php";
-            }
     }
 }
 else{

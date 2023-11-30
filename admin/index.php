@@ -117,6 +117,72 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
         //     }
         //     include "admin/danhmuc/add.php";
         //     break;
+        case "themtaikhoan":
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                // Lấy dữ liệu từ các trường nhập
+                $full_name = $_POST['full_name'];
+                $phone_number = $_POST['phone_number']; // Dữ liệu từ trường tệp tải lên
+                $birth_date = $_POST['birth_date'];
+                $gender = $_POST['gender'];
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+                $CCCD_id = $_POST['CCCD_id'];
+                $role = $_POST['role'];
+
+                $sql="INSERT INTO `users`(`full_name`, `phone_number`, `birth_date`, `gender`, `username`, `password`, `CCCD_id`, `role`) 
+                VALUES ('$full_name','$phone_number','$birth_date','$gender','$username','$password','$CCCD_id','$role')"; 
+                pdo_execute($sql);
+                
+                // if ($img_error === 0) {
+                //     // Di chuyển tệp tạm thời đến một địa chỉ cụ thể trên máy chủ
+                //     $img_destination = '../upload/' . $img_name;
+                //     move_uploaded_file($img_tmp_name, $img_destination);
+    
+                //     insert_phong($room_name,$img_destination,$description,$room_price,$type_id,$Trangthai);
+                   $thongbao="Thêm thành công";
+                // }
+            }
+            $listtk=  loadall_taikhoan();
+            include "taikhoan/add.php";
+            break;
+
+            case "suatk":
+                if(isset($_GET['id'])&&($_GET['id']>0)){
+                    $users=loadone_taikhoan($_GET['id']);
+                }
+                include "taikhoan/update.php";
+                break;
+                case "updatetk":
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        // Lấy giá trị từ form
+                        $user_id= $_POST['user_id'];
+                        $full_name = $_POST['full_name'];
+                        $phone_number = $_POST['phone_number']; // Dữ liệu từ trường tệp tải lên
+                        $birth_date = $_POST['birth_date'];
+                        $gender = $_POST['gender'];
+                        $username = $_POST['username'];
+                        $password = $_POST['password'];
+                        $CCCD_id = $_POST['CCCD_id'];
+                        $role = $_POST['role'];
+                        // Xử lý ảnh nếu có được chọn
+                       
+                        $sql="UPDATE `users` SET 
+                        `full_name`='$full_name',
+                        `phone_number`='$phone_number',
+                        `birth_date`='$birth_date',
+                        `gender`='$gender',
+                        `username`='$username',
+                        `password`='$password',
+                        `CCCD_id`='$CCCD_id',
+                        `role`='$role' 
+                        WHERE user_id = '$user_id'";
+                        pdo_execute($sql);
+                        $thongbao ="Cập nhật thành công";
+                    
+                    }
+                    $listtk=  loadall_taikhoan();
+                    include "taikhoan/listtk.php";
+                    break;  
         case "listtk":
             $listtk=loadall_taikhoan();
             include "taikhoan/listtk.php";
