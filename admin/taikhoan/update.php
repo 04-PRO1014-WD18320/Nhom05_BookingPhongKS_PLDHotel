@@ -11,11 +11,11 @@
 
 <div class="container mt-5">
     <h2>Sửa tài khoản</h2>
-    <form action="index.php?pg=updatetk" method="post">
+    <form action="process_add_account.php" method="post">
     <div class="form-group">
         <input type="hidden" name="user_id" value="<?=$users['user_id']?>">
     </div>
-        <div class="form-group">
+            <div class="form-group">
             <label for="full_name">Full Name:</label>
             <input type="text" class="form-control" id="full_name" name="full_name" value="<?=$users['full_name']?>" required>
         </div>
@@ -30,11 +30,10 @@
         <div class="form-group">
             <label for="gender">Gender:</label>
             <select class="form-control" id="gender" name="gender" required>
-                <option value="Male" <?php echo ($users['gender'] == 'Male') ? 'selected' : ''; ?> >Male</option>
-                <option value="Female" <?php echo ($users['gender'] == 'Female') ? 'selected' : ''; ?> >Female</option>
+                <option value="Male" <?php echo ($users['gender'] == Male) ? 'selected' : ''; ?> >Male</option>
+                <option value="Female" <?php echo ($users['gender'] == Female) ? 'selected' : ''; ?> >Female</option>
             </select>
         </div>
-
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="username" name="username" value="<?=$users['username']?>" required>

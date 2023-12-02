@@ -3,6 +3,7 @@
 
 <form action="index.php?pg=timphong" method="post">
 <div class="row">
+    
           
                 <!-- Input Check-in -->
                 <div class="col-md-3">
@@ -132,21 +133,21 @@
                     $img_path="upload/".$img;
                     $ctphong="index.php?pg=chitietphong&id=".$room_id;
                     $datphong="index.php?pg=datphong&id=".$room_id;
-                    if($Trangthai==2){
-                        $btn='<span
-                        class="icon-long-arrow-right"style="display: inline-block; background-color: red; color: white; padding: 10px 20px; border-radius: 5px;">Hết phòng</span>';
-                    }
-                    else{
+                    // if($Trangthai==2){
+                    //     $btn='<span
+                    //     class="icon-long-arrow-right"style="display: inline-block; background-color: red; color: white; padding: 10px 20px; border-radius: 5px;">Hết phòng</span>';
+                    // }
+                    // else{
                         $btn='<a href="'.$datphong.'" style="display: inline-block; padding: 10px 20px; background-color: #3498db;
                          color: #ffffff; text-decoration: none; border-radius: 5px;
                          transition: background-color 0.3s ease;"><span style="margin-left: 5px;">Book Now</span></a>';
-                    }
+                    // }
               echo'  <div style="text-align: center;padding: 10px;" class="col-md-4">
 
                     <a href="'.$ctphong.'"><img src="'.$img_path.'"
                             style="width: 100%; height: 300px;" alt=""></a>
                     <div style="background-color: #d6c08a;" class="text p-3 text-center">
-                        <h3 class="mb-3"><a style="color: black;" href="type_id">'.$room_name.'</a></h3>
+                        <h3 class="mb-3"><a style="color: black; text-decoration:none; href="type_id">'.$room_name.'</a></h3>
                         <p><span class="price mr-2">'.$room_price.'</span> <span class="per">per night</span></p>
                         <hr>
                         <p class="pt-1">'.$btn.'</p>
@@ -155,6 +156,97 @@
                  }
                 ?>
             </div>
+            <?php
+// Bảng phòng đã đặt, giả sử đây là dữ liệu từ CSDL
+$phongDaDat = array(5, 10, 15, 20);
+
+// Lấy ngày đầu tiên của tháng và số ngày trong tháng
+$ngayDauTien = date('Y-m-01');
+$soNgayTrongThang = date('t', strtotime($ngayDauTien));
+
+// Hiển thị tiêu đề
+echo '<h2>Lịch Đặt Phòng</h2>';
+echo '<table border="1">';
+echo '<tr>';
+echo '<th>Mon</th>';
+echo '<th>Tue</th>';
+echo '<th>Wed</th>';
+echo '<th>Thu</th>';
+echo '<th>Fri</th>';
+echo '<th>Sat</th>';
+echo '<th>Sun</th>';
+echo '</tr>';
+
+// Lặp qua từng ngày trong tháng
+for ($i = 1; $i <= $soNgayTrongThang; $i++) {
+    $ngayHienTai = date('Y-m-d', strtotime($ngayDauTien . '+' . ($i - 1) . ' days'));
+
+    // Kiểm tra xem ngày hiện tại có trong danh sách phòng đã đặt không
+    $coDatPhong = in_array($i, $phongDaDat);
+
+    // Bắt đầu một tuần mới
+    if ($i % 7 == 1) {
+        echo '<tr>';
+    }
+
+    // Màu nền đỏ cho ngày có phòng đã đặt
+    $style = $coDatPhong ? 'background-color: red;' : '';
+
+    // Hiển thị ngày
+    echo '<td style="' . $style . '">' . $i . '</td>';
+
+    // Kết thúc một tuần
+    if ($i % 7 == 0) {
+        echo '</tr>';
+    }
+}
+
+// Kết thúc bảng
+echo '</table>';
+?>
+<?php
+// Lấy năm hiện tại
+$namHienTai = date('Y');
+
+// Vòng lặp qua từng tháng trong năm
+for ($thang = 1; $thang <= 12; $thang++) {
+    // Lấy số ngày trong tháng
+    $soNgayTrongThang = cal_days_in_month(CAL_GREGORIAN, $thang, $namHienTai);
+
+    // Lấy ngày đầu tiên của tháng
+    $ngayDauTien = date('Y-m-01', strtotime("$namHienTai-$thang-01"));
+
+    echo '<h2>Lịch tháng ' . $thang . '</h2>';
+    echo '<table border="1">';
+    echo '<tr>';
+    echo '<th>Mon</th>';
+    echo '<th>Tue</th>';
+    echo '<th>Wed</th>';
+    echo '<th>Thu</th>';
+    echo '<th>Fri</th>';
+    echo '<th>Sat</th>';
+    echo '<th>Sun</th>';
+    echo '</tr>';
+
+    // Lặp qua từng ngày trong tháng
+    for ($i = 1; $i <= $soNgayTrongThang; $i++) {
+        $ngayHienTai = date('Y-m-d', strtotime($ngayDauTien . '+' . ($i - 1) . ' days'));
+
+        // Hiển thị ngày trong bảng
+        echo '<td>' . $i . '</td>';
+
+        // Kết thúc một tuần
+        if ($i % 7 == 0) {
+            echo '</tr><tr>';
+        }
+    }
+
+    // Kết thúc bảng
+    echo '</tr></table>';
+}
+?>
+
+
         </div>
         </div>
         </div>

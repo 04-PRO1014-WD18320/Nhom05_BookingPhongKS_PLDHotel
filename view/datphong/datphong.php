@@ -37,6 +37,15 @@
         <label for="tong_gia">Tổng Giá:</label>
         <input type="text" id="tong_gia" name="tong_gia" class="form-control" value="" readonly>
     </div>
+    <div class="form-group">
+            <label for="payment_method">Phương Thức Thanh Toán:</label>
+            <select class="form-control" id="payment_method" name="payment_method" required>
+                <option value="1">MOMO</option>
+                <!-- <option value="2">Tiền Mặt</option> -->
+                
+                Thêm phương thức thanh toán khác nếu cần
+            </select>
+        </div>
     <!-- <div class="form-group">
         <label for="so_nguoi">Số Người:</label>
         <input type="number" id="so_nguoi" name="so_nguoi" class="form-control" required>

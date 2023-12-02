@@ -42,7 +42,7 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Danh sách tài khoản</h6>
-                            <a href="index.php?pg=themtaikhoan" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Thêm mới</a>
+                            <a href="index.php?pg=themphong" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Thêm mới</a>
 
 
                         </div>
@@ -52,13 +52,13 @@
                                     <thead>
                                         <tr>
                                         <th scope="col">User ID</th>
-                                        <th scope="col">Tên đầy đủ</th>
-                                        <th scope="col">Số điện thoại</th>
-                                        <th scope="col">Ngày sinh</th>
-                                        <th scope="col">Giới tính</th>
+                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Birth Date</th>
+                                        <th scope="col">Gender</th>
                                         <th scope="col">Username</th>
-                                        <th scope="col">Mật khẩu</th>
-                                        <th scope="col">CCCD</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">CCCD ID</th>
                                         <th scope="col">Role</th>
                                         <th scope="col">Action</th>
                                         </tr>
@@ -66,13 +66,13 @@
                                     <tfoot>
                                         <tr>
                                         <th scope="col">User ID</th>
-                                        <th scope="col">Tên đầy đủ</th>
-                                        <th scope="col">Số điện thoại</th>
-                                        <th scope="col">Ngày sinh</th>
-                                        <th scope="col">Giới tính</th>
+                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Birth Date</th>
+                                        <th scope="col">Gender</th>
                                         <th scope="col">Username</th>
-                                        <th scope="col">Mật khẩu</th>
-                                        <th scope="col">CCCD</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">CCCD ID</th>
                                         <th scope="col">Role</th>
                                         <th scope="col">Action</th>
                                         </tr>

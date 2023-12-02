@@ -1,7 +1,8 @@
 <h1>Chỉnh sửa danh mục</h1>
 <form action="index.php?pg=updatedm" method="post" enctype="multipart/form-data">
 <div class="mb-3">
-    <input type="hidden" class="form-control" name="type_id"  value="<?=$type_room['type_id']?>">
+    <label class="form-label">Room ID</label>
+    <input type="text" class="form-control" name="type_id"  value="<?=$type_room['type_id']?>" readonly>
   </div>
   
 <div class="mb-3">
@@ -16,7 +17,7 @@
   </div>
   <div class="mb-3">
     <label  class="form-label">Số người</label>
-    <input type="text" class="form-control" name="max_people" aria-describedby="emailHelp" value="<?=$type_room['max_people']?>" readonly>
+    <input type="text" class="form-control" name="max_people" aria-describedby="emailHelp" value="<?=$type_room['max_people']?>" required>
   </div>
   <div class="mb-3">
     <label  class="form-label">Số giường</label>

@@ -25,19 +25,23 @@
                         <th>start_date</th>
                         <th>end_date</th>
                         <th>into_money</th>
-                        <th>PaymentStatus</th>
-            
+                        <th>user_service</th>
+                        <th>payment_methods</th>
+                        <!-- <th>PaymentStatus</th> -->
+                      
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>bookingdetail_id</th>
+                    <th>bookingdetail_id</th>
                         <th>room_id</th>
                         <th>booking_id</th>
                         <th>start_date</th>
                         <th>end_date</th>
                         <th>into_money</th>
-                        <th>PaymentStatus</th>
+                        <th>user_service</th>
+                        <th>payment_methods</th>
+                        <!-- <th>PaymentStatus</th> -->
                     </tr>
                 </tfoot>
                 <tbody>
@@ -45,6 +49,11 @@
 echo gettype($list)       ;        
 foreach ($list as $don){
 extract($don);
+if($payment_methods==1){$trangthai='chuyển khoản';}
+else{if($payment_methods==2){$trangthai='thẻ tín dụng';}
+else{if($payment_methods==3){$trangthai='tiền mặt';}
+else{$trangthai='chưa thanh toán';}
+}}
 echo '<tr>
 <td>' . $bookingdetail_id . '</td>
 <td>'.$room_id.'</td>
@@ -52,6 +61,8 @@ echo '<tr>
 <td>' . $start_date . '</td>
 <td>' . $end_date . '</td>
 <td>' . $into_money . '</td>
+<td>' . $user_service . '</td>
+<td>' . $trangthai . '</td>
 <td>
 
 </a>

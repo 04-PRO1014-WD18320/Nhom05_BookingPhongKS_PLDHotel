@@ -12,7 +12,7 @@
 <body>
 
 <div class="container">
-        <h2 class="mt-4">Xác Nhận Đặt Phòng</h2>
+        <h2 class="mt-4">Đặt phòng thành công</h2>
 
         <div class="alert alert-success mt-4">
             <p>Cảm ơn bạn đã đặt phòng với chúng tôi. Dưới đây là thông tin xác nhận:</p>
@@ -39,7 +39,7 @@
         <p class="mt-4">Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi.</p>
         <form class="" method="POST" target="_blank" enctype="application/x-www-form-urlencoded"
                           action="view/datphong/xulythanhtoan.php">
-        <a href="view/datphong/xulythanhtoan.php" class="btn btn-success mt-4">Tiến hành thanh toán</a>
+        <!-- <a href="view/datphong/xulythanhtoan.php" class="btn btn-success mt-4">Tiến hành thanh toán</a> -->
         </form>
         <a href="../index.php" class="btn btn-primary mt-4">Quay lại Trang Chủ</a>
     </div>
