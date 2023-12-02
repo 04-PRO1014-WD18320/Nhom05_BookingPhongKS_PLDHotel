@@ -38,8 +38,16 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 $sql = "INSERT INTO datphong ( room_id,customer_name,id_number, email, checkin_date, checkout_date,note) 
                 VALUES ('$room_id','$customerName','$id_number','$email', '$checkinDate', '$checkoutDate','$note')";
                 pdo_execute($sql);
-                $sql2="INSERT INTO `booking_detail`(`room_id`, `booking_id`, `start_date`, `end_date`, `into_money`) 
-                VALUES ('$room_id','[value-3]','[value-4]','[value-5]','[value-6]')";
+                $sql1="UPDATE rooms SET Trangthai = '2' WHERE room_id =  $room_id";
+                $ngayHienTai = date("Y-m-d");
+                if( $ngayHienTai =$checkinDate){
+                    $sql1="UPDATE rooms
+                    SET TrangThai = '2'
+                    WHERE room_id =". $room_id;
+                    pdo_execute($sql1);
+                }
+               
+              
                 $_SESSION['confirmation_info'] = array(
                     'customer_name' => $customerName,
                     'id_number' => $id_number,
@@ -68,7 +76,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             $thongbao="đặt phòng thành công";
             }
             include "view/datphong/xacnhan.php";
-        break; 
+            break; 
         case "danhsach":
             $iddm=$_GET['iddm'];
             $sql="select * from rooms where type_id=".$iddm;
@@ -87,11 +95,33 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             }
             include "view/chitietphong.php";
             break;
+        case 'timphong':
+            $danh_muc_phong= $_POST['roomType'];
+            $so_nguoi=$_POST['guests'];
+            $ngay_checkin=$_POST['checkin'];
+            $ngay_checkout=$_POST['checkout'];
+            $sql = "SELECT * FROM rooms
+            INNER JOIN type_room ON rooms.type_id = type_room.type_id
+            WHERE type_room.type_id= '$danh_muc_phong'
+            AND type_room.max_people >= $so_nguoi
+            AND NOT EXISTS (
+            SELECT 1 FROM datphong
+            WHERE rooms.room_id = datphong.room_id
+                AND (
+                  ('$ngay_checkin' BETWEEN datphong.checkin_date AND datphong.checkout_date)
+                  OR ('$ngay_checkout' BETWEEN datphong.checkin_date AND datphong.checkout_date)
+                  OR (datphong.checkin_date IS NULL AND datphong.checkout_date IS NULL)
+                )
+          )";
 
+// Thực hiện câu truy vấn...
+           $phong=pdo_query($sql);
+        include "view/danhsach.php";
+        break;
     }
 }
 else{
-    include "view/home.php";
+include "view/home.php";
 }
 include "view/footer.php";
 ?>

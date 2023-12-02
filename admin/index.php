@@ -27,16 +27,28 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             break;
         case "checkout":
             $bookingId = $_GET["id"];
-            $sql = "UPDATE datphong SET checked_in = 4 WHERE datphong_id = $bookingId";
-            pdo_execute($sql);
-            $sql="SELECT * FROM `datphong` WHERE 1";
-            $listdon=pdo_query($sql);
-            $sql="SELECT * FROM `service` WHERE 1";
-            $listdv=pdo_query($sql);
+            $sql1 = "UPDATE datphong SET checked_in = '4' WHERE datphong_id =".$bookingId;
+            pdo_execute($sql1);
+            $sql="select * from datphong where datphong_id=".$bookingId ;
+            $donhang=pdo_query($sql);
+            $sql4="SELECT * FROM `booking_detail` WHERE booking_id=".$bookingId;
+            $check_don=pdo_query_one($sql4);
+            $sql2="SELECT * FROM `datphong` WHERE 1  order by datphong_id desc";
+            $listdon=pdo_query($sql2);
+            $sql3="SELECT * FROM `service` WHERE 1  order by service_id desc";
+            $listdv=pdo_query($sql3);
+            $insertBookingDetail = "UPDATE  booking_detail SET end_date =NOW() where booking_id =".$bookingId;
+            pdo_execute($insertBookingDetail);
+            $sql5="select room_price from rooms join booking_detail ON rooms.room_id = booking_detail.room_id where booking_detail.booking_id =".$bookingId;
+            $room_price=pdo_query_value($sql5);
+            $sql_update_trangthai="UPDATE rooms SET Trangthai = '1' WHERE room_id = (SELECT room_id FROM datphong WHERE datphong_id =$bookingId)";
+            pdo_execute($sql_update_trangthai);
             include "dondat/checkout_form.php";
             break;
         case "cancel":
             $bookingId = $_GET["id"];
+            $sql_update_trangthai="UPDATE rooms SET Trangthai = '1' WHERE room_id = (SELECT room_id FROM datphong WHERE datphong_id =". $bookingId;
+            pdo_execute($sql_update_trangthai);
             $sql = "UPDATE datphong SET checked_in = 3 WHERE datphong_id = $bookingId";
             pdo_execute($sql);
             $sql="SELECT * FROM `datphong` WHERE 1";
@@ -68,7 +80,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     $img_destination = '../upload/' . $img_name;
                     move_uploaded_file($img_tmp_name, $img_destination);
     
-                    insert_phong($room_name,$img_destination,$description,$room_price,$type_id,$Trangthai);
+                    insert_phong($room_name, $img_name,$description,$room_price,$type_id,$Trangthai);
                     $thongbao="Thêm thành công";
                 }
             }
@@ -135,15 +147,16 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 if (!empty($_FILES['img']['tmp_name']))  {
                     $upload_dir = "upload/"; // Thư mục lưu trữ ảnh
                     $img_path = $upload_dir . basename($_FILES['img']['name']);
+                    $img_name=basename($_FILES['img']['name']);
                     move_uploaded_file($_FILES['img']['tmp_name'], $img_path);
                     $img=$img_path;
                 }
                 else{
-                    $img=$oldimg;
+                    $img_name=$oldimg;
                 }
                 $sql="UPDATE rooms SET 
                 room_name = '$room_name', 
-                img = '$img', 
+                img = '$img_name', 
                 description = '$description', 
                 room_price = '$room_price', 
                 type_id = '$type_id', 
