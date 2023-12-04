@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 session_start();
 include "../../model/pdo.php";
 include "../../model/bl.php";
@@ -22,9 +22,6 @@ $dsbl = loadall_binhluan($room_id);
         <div class="boxcontent2 binhluan">
             <table>
                 <?php
-                // echo "Nội dung bình luận ở đây nhé: ".$idpro;
-
-
                 foreach ($dsbl as $bl) {
                     extract($bl);
                     echo    '<tr><td>' . $content . '</td>';
@@ -61,4 +58,4 @@ $dsbl = loadall_binhluan($room_id);
     </div>
 </body>
 
-</html> -->
+</html>
