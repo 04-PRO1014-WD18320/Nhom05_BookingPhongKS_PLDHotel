@@ -20,12 +20,13 @@ $tienPhong= $so_ngay * $room_price;
 </head>
 <body>
 
-<form action="" method="post">
+<form action="index.php?pg=detail" method="post">
 <div class="container mt-5">    
         <div class="form-group">
             <label for="room_number">Số Phòng:</label>
             <input type="text" class="form-control" id="room_number" name="room_number" value="<?=$check_don['room_id']?>"disabled>
             <input type="hidden" name="" value="<?=$tienPhong?>" id="room_price">
+            <input type="hidden" name="booking_id" value="<?=$_GET['id']?>">
         </div>
 
         <div class="form-group">
@@ -41,29 +42,14 @@ $tienPhong= $so_ngay * $room_price;
         <div class="form-group">
             <label for="payment_method">Phương Thức Thanh Toán:</label>
             <select class="form-control" id="payment_method" name="payment_method" required>
-                <option value="credit_card">Chuyển khoản</option>
-                <option value="credit_card">Thẻ Tín Dụng</option>
-                <option value="cash">Tiền Mặt</option> 
+                <option value="1">Chuyển khoản</option>
+                <option value="2">Thẻ Tín Dụng</option>
+                <option value="3">Tiền Mặt</option> 
                 Thêm phương thức thanh toán khác nếu cần
             </select>
         </div>
 
-  <!-- Hiển thị thông tin đặt hàng -->
-  <div class="form-group">
-                    <h3>Thông Tin Đặt Hàng</h3>
-                    <p id="giaPhong"></p>
-                    <p id="service-name">Tên Dịch Vụ: </p>
-                    <p id="price">Tiền Dịch Vụ: 0.00VNĐ</p>
-                    <p id="total">Tổng tiền: 0.00VNĐ</p>
-                    <!-- <input class="form-control" type="number" id="quantity" value="1" min="1" onchange="updateOrderDetails()" type="hidden"> -->
-                    <input type="hidden" name="" onchange="updateOrderDetails()" id="quantity">
-                </div>
-
-                <!-- Nút thanh toán -->
-                <button class="btn btn-primary" onclick="checkout()">Thanh Toán</button>
-
-    </form>
-    </div>
+ 
 
 
     
@@ -91,7 +77,24 @@ $tienPhong= $so_ngay * $room_price;
                     <?php endforeach; ?>
                 </div>
 
-              
+               <!-- Hiển thị thông tin đặt hàng -->
+                <div class="form-group">
+                    <h3>Thông Tin Đặt Hàng</h3>
+                    <p id="giaPhong"></p>
+                    <input  id="service" type="hidden" name="service_name">
+                    <p id="service-name" name="service_name">Tên Dịch Vụ: </p>
+                    <p id="price">Tiền Dịch Vụ: 0VNĐ</p>
+                    <input id="totalp"type="hidden" name="total">
+                    <p id="total"  >Tổng tiền: 0VNĐ</p>
+                    <!-- <input class="form-control" type="number" id="quantity" value="1" min="1" onchange="updateOrderDetails()" type="hidden"> -->
+                    <input type="hidden" name="" onchange="updateOrderDetails()" id="quantity">
+                </div>
+
+                <!-- Nút thanh toán -->
+                <button class="btn btn-primary" type="submit" >Thanh Toán</button>
+
+    </form>
+    </div>
             </div>
         </div>
     </div>
@@ -129,9 +132,13 @@ $tienPhong= $so_ngay * $room_price;
 
             // Cập nhật thông tin đặt hàng
             serviceName.innerText = "Tên Dịch Vụ: " + selectedServiceNames.join(', ');
-            price.innerText = "Tiền Dịch Vụ: " + (selectedPrices.reduce((total, price) => total + price, 0)).toFixed(2)+"VNĐ";
+            var service = document.getElementById("service");
+            service.value = selectedServiceNames;
+            price.innerText = "Tiền Dịch Vụ: " + (selectedPrices.reduce((total, price) => total + price, 0)).toFixed(0)+"VNĐ";
             var tong=parseInt(room_price)+parseInt((selectedPrices.reduce((total, price) => total + price, 0)).toFixed(2));
             total.innerText="Tổng tiền: " +  tong + "VNĐ";
+            var totalp = document.getElementById("totalp");
+            totalp.value= tong;
         }
 
         // Hàm tăng số lượng
