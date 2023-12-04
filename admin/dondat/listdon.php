@@ -91,8 +91,15 @@
                 //hiển thị nút
                 if ($checked_in == 1) {
                     $btn = '<a href="' . $checkout . '"><input type="button" value="Check-out" onclick="return confirm(\'Xác nhận check-out\')"></a>  ';
-                } else {
+                } else if($checked_in == 0){
                     $btn = '<a href="' . $checkin . '"><input type="button" value="Check-in" onclick="return confirm(\'Xác nhận check-in\')"></a>  ';
+                }
+                else{
+                    $btn ="";
+                }
+                if($checked_in!=0){$cancel="";}
+                else{
+                    $cancel=' <a href="' . $cancel_booking . '"><input type="button" value="Hủy đơn đặt"  onclick="return confirm(\'Xác nhận hủy\')"></a>';
                 }
                 echo '<tr>
                 <td>' . $datphong_id . '</td>
@@ -111,7 +118,7 @@
                
                  <a href="' . $chitiet . '"><input type="button" value="xem chi tiết"  onclick="return confirm(\'Xác nhận hủy\')"></a>
                  <a href="'.$xoaphong.'"><input type="button" value="Xóa" onclick="return confirm(\'Bạn có chắc muốn xóa\')"></a>
-                 <a href="' . $cancel_booking . '"><input type="button" value="Hủy đơn đặt"  onclick="return confirm(\'Xác nhận hủy\')"></a>
+                 '.$cancel.'
                 </td>
             </tr>';
             }

@@ -57,7 +57,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             break;
         case "cancel":
             $bookingId = $_GET["id"];
-            $sql_update_trangthai="UPDATE rooms SET Trangthai = '1' WHERE room_id = (SELECT room_id FROM datphong WHERE datphong_id =". $bookingId;
+            $sql_update_trangthai="UPDATE rooms SET Trangthai = '1' WHERE room_id = (SELECT room_id FROM datphong WHERE datphong_id =  $bookingId)";
             pdo_execute($sql_update_trangthai);
             $sql = "UPDATE datphong SET checked_in = 3 WHERE datphong_id = $bookingId";
             pdo_execute($sql);
@@ -214,12 +214,13 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 case "suadm":
                     if(isset($_GET['id']) && ($_GET['id']>0))
                     {
-                        $dm = loadone_dm($_GET['id']);
+                        $type_room = loadone_dm($_GET['id']);
                     }
                     $sql ="SELECT * FROM type_room WHERE id=".$_GET['id'];
+                    include "danhmuc/update.php";
         case "updatedm":
                     if($_SERVER["REQUEST_METHOD"] == "POST"){
-                        $dm=loadone_dm($_GET['id']);
+                        
                         $type_id=$_POST['type_id'];
                         $type_name=$_POST['type_name'];
                         $img=$_FILES['img']['name'];
@@ -236,17 +237,18 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     else{
                         $img=$oldimg;
                     }
+                    
                     $sql="UPDATE type_room SET 
                     type_name = '$type_name', 
-                    img = '$img', 
-                    -- max_people = '$max_people', 
+                    img = '$img',
+                    max_people = '$max_people', 
                     -- max_bed = '$max_bed', 
-                    WHERE type_id = '$type_id'";
+                    WHERE type_id =".$type_id;
                         pdo_execute($sql);
                         $thongbao="Update thành công";
                     }
                    $listdm=loadall_dm();
-                include "danhmuc/update.php";
+                include "danhmuc/listdm.php";
                 break;
 
                 case "xoadm":
@@ -255,6 +257,18 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     }
                     $listdm=loadall_dm();
                     include "danhmuc/listdm.php";                     
+                    break;
+                case "detail":
+                    $bookingId=$_POST['booking_id'];
+                    $service_name=$_POST['service_name'];
+                    $total=$_POST['total'];
+                    $payment_method=$_POST['payment_method'];
+                    $insertBookingDetail = "UPDATE  booking_detail SET user_service ='$service_name',
+                    into_money= '$total',payment_methods= '$payment_method',PaymentStatus='0' where booking_id =".$bookingId;
+                    pdo_execute($insertBookingDetail);
+                    $sql="SELECT * FROM `booking_detail` WHERE booking_id =".$bookingId;
+                    $list= pdo_query($sql);
+                    include "dondat/chitietdon.php";
                     break;
             }
 

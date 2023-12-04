@@ -17,7 +17,7 @@
   </div>
   <div class="mb-3">
     <label  class="form-label">Số người</label>
-    <input type="text" class="form-control" name="max_people" aria-describedby="emailHelp" value="<?=$type_room['max_people']?>" readonly>
+    <input type="text" class="form-control" name="max_people" aria-describedby="emailHelp" value="<?=$type_room['max_people']?>" required>
   </div>
   <div class="mb-3">
     <label  class="form-label">Số giường</label>
