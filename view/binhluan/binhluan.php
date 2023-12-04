@@ -1,7 +1,7 @@
 <?php
 session_start();
 include "../../model/pdo.php";
-include "../../model/bl.php";
+include "../../model/binhluan.php";
 $id = $_REQUEST['room_id'];
 
 $dsbl = loadall_binhluan($room_id);

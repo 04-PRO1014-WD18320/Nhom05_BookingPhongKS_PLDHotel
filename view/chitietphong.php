@@ -29,6 +29,9 @@
                   
                     </div>
             </div>
+            <div>
+                    <iframe src="view/binhluan/binhluan.php?room_id=<?=$id?>" frameborder="0" width="100%" height="300px"></iframe>
+                </div>
         </div>
 
         <!-- Bên phải - Danh sách phòng -->
