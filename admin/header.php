@@ -111,7 +111,7 @@
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="index.php?pg=dsphong">Danh sách phòng</a>
                         <a class="collapse-item" href="index.php?pg=listdm">Danh mục phòng</a>
-                        <a class="collapse-item" href="index.php?pg=dsphong">Thêm hình ảnh</a>
+                        <a class="collapse-item" href="index.php?pg=dsanh">Danh sách hình ảnh</a>
                         <a class="collapse-item" href="index.php?pg=listtk">Danh sách tài khoản</a>
                         <a class="collapse-item" href="index.php?pg=listdon">Danh sách đơn hàng</a>
                         <a class="collapse-item" href="index.php?pg=listdv">Danh sách dịch vụ</a>

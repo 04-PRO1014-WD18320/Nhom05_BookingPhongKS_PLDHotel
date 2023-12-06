@@ -16,6 +16,7 @@
         <input type="hidden" name="user_id" value="<?=$users['user_id']?>">
     </div>
             <div class="form-group">
+
             <label for="full_name">Full Name:</label>
             <input type="text" class="form-control" id="full_name" name="full_name" value="<?=$users['full_name']?>" required>
         </div>
