@@ -8,21 +8,31 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
         case "listdv":
-            $sql="SELECT * FROM `service` WHERE 1";
+            $sql="SELECT * FROM `service` WHERE 1  order by service_id desc";
             $listdv=pdo_query($sql);
             include "dichvu/listdv.php";
             break;
         case "listdon":
-            $sql="SELECT * FROM `datphong` WHERE 1";
+            $sql="SELECT * FROM `datphong` WHERE 1  order by datphong_id desc";
             $listdon=pdo_query($sql);
             include "dondat/listdon.php";
             break;
+        case "chitietdon":
+            $sql="SELECT * FROM `booking_detail` WHERE booking_id =".$_GET['id'];
+            $list= pdo_query($sql);
+            include "dondat/chitietdon.php";
+            break;
         case "checkin":
             $bookingId = $_GET["id"];
-            $sql = "UPDATE datphong SET checked_in = 1 WHERE datphong_id = $bookingId";
+            $sql1="select room_id from datphong where datphong_id =".$bookingId;
+            $room_id=pdo_query_value($sql1);
+            $sql = "UPDATE datphong SET checked_in = 1 WHERE datphong_id =".$bookingId;
             pdo_execute($sql);
-            $sql="SELECT * FROM `datphong` WHERE 1";
-            $listdon=pdo_query($sql);
+            $insertBookingDetail = "INSERT INTO booking_detail (room_id, Booking_id, start_date) 
+            VALUES ($room_id, $bookingId, NOW())";
+            pdo_execute($insertBookingDetail);
+            $sqlds="SELECT * FROM `datphong` WHERE 1  order by datphong_id desc";
+            $listdon=pdo_query($sqlds);
             include "dondat/listdon.php";
             break;
         case "checkout":
@@ -96,22 +106,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             $listphong=loadall_phong();
             include "phong/danhsachphong.php";                     
             break;
-        // case "adddm":
-        //     // Kiểm tra khi nhấn vào submit
-        //     if(isset($_POST['themmoi'])&&($_POST['themmoi']))
-        //     {
-        //         $type_name=$_POST['type_name'];
-        //         $max_people=$_POST['max_people'];
-        //         $max_bed=$_POST['max_bed'];
-        //         $sql="insert into type_room(type_name, max_people, max_bed) values('$type_name', '$max_people', '$max_bed')";
-        //         pdo_execute($sql);
-        //         $thongbao="Thêm thành công";
-        //     }
-        //     else{
-        //         echo"không có gì";
-        //     }
-        //     include "admin/danhmuc/add.php";
-        //     break;
+      
         case "listtk":
             $listtk=loadall_taikhoan();
             include "taikhoan/listtk.php";
@@ -145,7 +140,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                 $oldimg = $_POST["oldimg"];
                 // Xử lý ảnh nếu có được chọn
                 if (!empty($_FILES['img']['tmp_name']))  {
-                    $upload_dir = "upload/"; // Thư mục lưu trữ ảnh
+                    $upload_dir = "../upload/"; // Thư mục lưu trữ ảnh
                     $img_path = $upload_dir . basename($_FILES['img']['name']);
                     $img_name=basename($_FILES['img']['name']);
                     move_uploaded_file($_FILES['img']['tmp_name'], $img_path);
@@ -348,7 +343,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     include "dondat/chitietdon.php";
                     break;
 
-                    case 'dsbl':
+                 case 'dsbl':
                         $listbinhluan = loadall_binhluan(0);
                         include "binhluan/list.php";
                             break;
