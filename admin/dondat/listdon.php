@@ -117,7 +117,7 @@
                 '.$btn.'
                
                  <a href="' . $chitiet . '"><input type="button" value="xem chi tiết"  onclick="return confirm(\'Xác nhận hủy\')"></a>
-                 <a href="'.$xoaphong.'"><input type="button" value="Xóa" onclick="return confirm(\'Bạn có chắc muốn xóa\')"></a>
+                
                  '.$cancel.'
                 </td>
             </tr>';

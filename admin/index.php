@@ -1,12 +1,23 @@
 <?php
-include "header.php";
 include "../model/pdo.php";
+include "../controller/login.php";
+
 include "../model/phong.php";
 include "../model/danhmuc.php";
 include "../model/taikhoan.php";
+
+$allowedRoles=[1,2];
+checkRole($allowedRoles);
+include "header.php";
+
+
 if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
+        // case "doanhthu":
+        //     $sql="SELECT DATE_FORMAT(start_date, '%Y-%m') AS thang, SUM(into_money) AS 
+        //     doanh_thu FROM booking_detail WHERE start_date BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') AND LAST_DAY(NOW()) GROUP BY thang";
+        //      $doanhthu=pdo_query($sql);
         case "listdv":
             $sql="SELECT * FROM `service` WHERE 1  order by service_id desc";
             $listdv=pdo_query($sql);
@@ -53,6 +64,12 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             $room_price=pdo_query_value($sql5);
             $sql_update_trangthai="UPDATE rooms SET Trangthai = '1' WHERE room_id = (SELECT room_id FROM datphong WHERE datphong_id =$bookingId)";
             pdo_execute($sql_update_trangthai);
+            $sql_pay="SELECT COALESCE(SUM(amount_paid), 0) AS total_paid
+                    FROM payments
+                    WHERE booking_id =".$bookingId ;
+            $paid=pdo_query_value($sql_pay);
+            var_dump($paid);
+            $paidJSON = json_encode($paid);
             include "dondat/checkout_form.php";
             break;
         case "cancel":
@@ -71,6 +88,8 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             break;
 
         case "themphong":
+            $allowedRoles=[1];
+            checkRole($allowedRoles);
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Lấy dữ liệu từ các trường nhập
                 $room_id = $_POST['room_id'];
@@ -100,13 +119,30 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             break;
 
         case "xoaphong":
+            $allowedRoles=[1];
+            checkRole($allowedRoles);
             if(isset($_GET['id'])&&($_GET['id']>0)){
                 delete_phong($_GET['id']); 
             }
             $listphong=loadall_phong();
             include "phong/danhsachphong.php";                     
             break;
-      
+        // case "adddm":
+        //     // Kiểm tra khi nhấn vào submit
+        //     if(isset($_POST['themmoi'])&&($_POST['themmoi']))
+        //     {
+        //         $type_name=$_POST['type_name'];
+        //         $max_people=$_POST['max_people'];
+        //         $max_bed=$_POST['max_bed'];
+        //         $sql="insert into type_room(type_name, max_people, max_bed) values('$type_name', '$max_people', '$max_bed')";
+        //         pdo_execute($sql);
+        //         $thongbao="Thêm thành công";
+        //     }
+        //     else{
+        //         echo"không có gì";
+        //     }
+        //     include "admin/danhmuc/add.php";
+        //     break;
         case "listtk":
             $listtk=loadall_taikhoan();
             include "taikhoan/listtk.php";
@@ -120,6 +156,8 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             break;
 
         case "suaphong":
+            $allowedRoles=[1];
+            checkRole($allowedRoles);
             if(isset($_GET['id'])&&($_GET['id']>0)){
                 $rooms=loadone_phong($_GET['id']);
             }
@@ -175,91 +213,91 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             $listdm=loadall_dm($keyw="",$type_id=0);
             include "danhmuc/listdm.php";
             break;
-        case 'thongke':
-            $listthongke=loadall_thongke();
-            include "thongke/list.php";
-            break;
-        case 'bieudo':
-            $listthongke=loadall_thongke();
-            include "thongke/bieudo.php";
-            break;
-        case 'dsanh':
-            $listphong=loadall_phong();
-            $sql ="select * from room_image";
-            $listanh= pdo_query($sql);
-            include "anhphong/list.php";
-            break;
-        case 'addanh':
-                $listphong=loadall_phong();
-                if($_SERVER["REQUEST_METHOD"] == "POST")
-                {
-                    $room_id=$_POST['room_id'];
-                    $room_img=$_FILES['room_img']['name'];
-                    $target_dir = "../upload/";
-                $target_file = $target_dir . basename($_FILES["room_img"]["name"]);
-                move_uploaded_file($_FILES["room_img"]["tmp_name"], $target_file);
-                $sql ="INSERT INTO `room_image`(`room_id`, `room_img`) 
-                VALUES ('$room_id','$room_img')";
-                pdo_execute($sql);
-               
-                $thongbao="Thêm thành công";
-                }
-                
-                include "anhphong/add.php";
+            case 'thongke':
+                $listthongke=loadall_thongke();
+                include "thongke/list.php";
                 break;
-                case "xoaanh":
-                    if(isset($_GET['id'])&&($_GET['id']>0)){
-                        $sql="DELETE FROM `room_image` WHERE room_image_id =".$_GET['id'];
-                        pdo_execute($sql);
+            case 'bieudo':
+                $listthongke=loadall_thongke();
+                include "thongke/bieudo.php";
+                break;
+            case 'dsanh':
+                $listphong=loadall_phong();
+                $sql ="select * from room_image";
+                $listanh= pdo_query($sql);
+                include "anhphong/list.php";
+                break;
+            case 'addanh':
+                    $listphong=loadall_phong();
+                    if($_SERVER["REQUEST_METHOD"] == "POST")
+                    {
+                        $room_id=$_POST['room_id'];
+                        $room_img=$_FILES['room_img']['name'];
+                        $target_dir = "../upload/";
+                    $target_file = $target_dir . basename($_FILES["room_img"]["name"]);
+                    move_uploaded_file($_FILES["room_img"]["tmp_name"], $target_file);
+                    $sql ="INSERT INTO `room_image`(`room_id`, `room_img`) 
+                    VALUES ('$room_id','$room_img')";
+                    pdo_execute($sql);
+                   
+                    $thongbao="Thêm thành công";
                     }
-                    $sql ="select * from room_image";
-                    $listanh= pdo_query($sql);
-                    include "anhphong/list.php";
+                    
+                    include "anhphong/add.php";
                     break;
-                case "suaanh":
+                    case "xoaanh":
                         if(isset($_GET['id'])&&($_GET['id']>0)){
-                            $sql="SELECT * FROM `room_image` WHERE room_image_id=".$_GET['id'];
-                            $img=pdo_query_one($sql);
+                            $sql="DELETE FROM `room_image` WHERE room_image_id =".$_GET['id'];
+                            pdo_execute($sql);
                         }
-                        $sql="SELECT * FROM type_room WHERE 1";
-                        $listphong=loadall_phong();
-                        include "anhphong/update.php";
+                        $sql ="select * from room_image";
+                        $listanh= pdo_query($sql);
+                        include "anhphong/list.php";
                         break;
-                case "updateanh":
-                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                // Lấy giá trị từ form
-                                $room_id = $_POST['room_id'];
-                                $room_name = $_POST['room_name'];
-                                $description = $_POST['description'];
-                                $room_price = $_POST['room_price'];
-                                $type_id = $_POST['type_id'];
-                                $trangthai = $_POST['Trangthai'];
-                                $oldimg = $_POST["oldimg"];
-                                // Xử lý ảnh nếu có được chọn
-                                if (!empty($_FILES['img']['tmp_name']))  {
-                                    $upload_dir = "../upload/"; // Thư mục lưu trữ ảnh
-                                    $img_path = $upload_dir . basename($_FILES['img']['name']);
-                                    move_uploaded_file($_FILES['img']['tmp_name'], $img_path);
-                                    $img=$img_path;
-                                }
-                                else{
-                                    $img=$oldimg;
-                                }
-                                $sql="UPDATE rooms SET 
-                                room_name = '$room_name', 
-                                img = '$img', 
-                                description = '$description', 
-                                room_price = '$room_price', 
-                                type_id = '$type_id', 
-                                Trangthai = '$trangthai' 
-                                WHERE room_id = '$room_id'";
-                                pdo_execute($sql);
-                                $thongbao ="Cập nhật thành công";
-                            
+                    case "suaanh":
+                            if(isset($_GET['id'])&&($_GET['id']>0)){
+                                $sql="SELECT * FROM `room_image` WHERE room_image_id=".$_GET['id'];
+                                $img=pdo_query_one($sql);
                             }
-                            $listphong=loadall_phong($keyw="",$type_id=0);
-                            include "phong/danhsachphong.php";
-                            break;                                                   
+                            $sql="SELECT * FROM type_room WHERE 1";
+                            $listphong=loadall_phong();
+                            include "anhphong/update.php";
+                            break;
+                    case "updateanh":
+                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                    // Lấy giá trị từ form
+                                    $room_id = $_POST['room_id'];
+                                    $room_name = $_POST['room_name'];
+                                    $description = $_POST['description'];
+                                    $room_price = $_POST['room_price'];
+                                    $type_id = $_POST['type_id'];
+                                    $trangthai = $_POST['Trangthai'];
+                                    $oldimg = $_POST["oldimg"];
+                                    // Xử lý ảnh nếu có được chọn
+                                    if (!empty($_FILES['img']['tmp_name']))  {
+                                        $upload_dir = "../upload/"; // Thư mục lưu trữ ảnh
+                                        $img_path = $upload_dir . basename($_FILES['img']['name']);
+                                        move_uploaded_file($_FILES['img']['tmp_name'], $img_path);
+                                        $img=$img_path;
+                                    }
+                                    else{
+                                        $img=$oldimg;
+                                    }
+                                    $sql="UPDATE rooms SET 
+                                    room_name = '$room_name', 
+                                    img = '$img', 
+                                    description = '$description', 
+                                    room_price = '$room_price', 
+                                    type_id = '$type_id', 
+                                    Trangthai = '$trangthai' 
+                                    WHERE room_id = '$room_id'";
+                                    pdo_execute($sql);
+                                    $thongbao ="Cập nhật thành công";
+                                
+                                }
+                                $listphong=loadall_phong($keyw="",$type_id=0);
+                                include "phong/danhsachphong.php";        
+                                    break;
         case 'adddm':
                 // Kiểm tra khi nhấn vào submit
                 if($_SERVER["REQUEST_METHOD"] == "POST")
@@ -288,8 +326,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     }
                     $sql ="SELECT * FROM type_room WHERE id=".$_GET['id'];
                     include "danhmuc/update.php";
-
-        case "updatedm":
+                        case "updatedm":
                     if($_SERVER["REQUEST_METHOD"] == "POST"){
                         
                         $type_id=$_POST['type_id'];
@@ -329,7 +366,6 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     $listdm=loadall_dm();
                     include "danhmuc/listdm.php";                     
                     break;
-
                 case "detail":
                     $bookingId=$_POST['booking_id'];
                     $service_name=$_POST['service_name'];
@@ -342,8 +378,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                     $list= pdo_query($sql);
                     include "dondat/chitietdon.php";
                     break;
-
-                 case 'dsbl':
+                    case 'dsbl':
                         $listbinhluan = loadall_binhluan(0);
                         include "binhluan/list.php";
                             break;
@@ -355,8 +390,7 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
                             $listbinhluan = loadall_binhluan1();
                             include "binhluan/list.php";
                                 break;
-
-            }
+                                        }
 
      } else{
         include "home.php";

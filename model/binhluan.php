@@ -1,7 +1,7 @@
 <?php
-    function insert_binhluan($content, $room_id, $user_id, $feedback_date)
+    function insert_binhluan($content, $room_id, $user_id)
     {
-        $sql = "insert into feedback(content,room_id,user_id,feedback_date) values('$content', '$room_id', '$user_id', '$feedback_date')";
+        $sql = "insert into feedback(content,room_id,user_id) values('$content', '$room_id', '$user_id')";
         pdo_execute($sql);
     }
 

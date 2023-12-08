@@ -2,7 +2,7 @@
 <form  action="index.php?pg=themphong" method="post" enctype="multipart/form-data">
   <div class="mb-3">
     <label class="form-label">Room ID</label>
-    <input type="text" class="form-control" name="room_id" required>
+    <input type="text" class="form-control" name="room_id"  readonly>
   </div>
 
   <div class="mb-3">

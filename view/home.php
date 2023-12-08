@@ -19,7 +19,8 @@
 
                 <div class="col-md-3">
                     <label for="roomType">Thể loại phòng:</label><br>
-                    <select id="roomType" name="roomType" class="form-control" onchange="updateRoomType()">
+                    <select id="roomType" name="roomType" class="form-control" onchange="updateRoomType()" required>
+                    <option value="">chọn loại phòng</option>
                         <?php 
                         foreach ($dsdm as $dm) {
                             extract($dm);
@@ -31,7 +32,8 @@
 
                 <div class="col-md-2">
                     <label for="guests">Số lượng người:</label><br>
-                    <select id="guests" name="guests" class="form-control" onchange="updateGuestCount()">
+                    <select id="guests" name="guests" class="form-control" onchange="updateGuestCount()" required>
+                    <option value="0">chọn số người</option>
                         <option value="1">1 người</option>
                         <option value="2">2 người</option>
                         <option value="3">3 người</option>
@@ -156,95 +158,9 @@
                  }
                 ?>
             </div>
-            <?php
-// Bảng phòng đã đặt, giả sử đây là dữ liệu từ CSDL
-$phongDaDat = array(5, 10, 15, 20);
+           
 
-// Lấy ngày đầu tiên của tháng và số ngày trong tháng
-$ngayDauTien = date('Y-m-01');
-$soNgayTrongThang = date('t', strtotime($ngayDauTien));
 
-// Hiển thị tiêu đề
-echo '<h2>Lịch Đặt Phòng</h2>';
-echo '<table border="1">';
-echo '<tr>';
-echo '<th>Mon</th>';
-echo '<th>Tue</th>';
-echo '<th>Wed</th>';
-echo '<th>Thu</th>';
-echo '<th>Fri</th>';
-echo '<th>Sat</th>';
-echo '<th>Sun</th>';
-echo '</tr>';
-
-// Lặp qua từng ngày trong tháng
-for ($i = 1; $i <= $soNgayTrongThang; $i++) {
-    $ngayHienTai = date('Y-m-d', strtotime($ngayDauTien . '+' . ($i - 1) . ' days'));
-
-    // Kiểm tra xem ngày hiện tại có trong danh sách phòng đã đặt không
-    $coDatPhong = in_array($i, $phongDaDat);
-
-    // Bắt đầu một tuần mới
-    if ($i % 7 == 1) {
-        echo '<tr>';
-    }
-
-    // Màu nền đỏ cho ngày có phòng đã đặt
-    $style = $coDatPhong ? 'background-color: red;' : '';
-
-    // Hiển thị ngày
-    echo '<td style="' . $style . '">' . $i . '</td>';
-
-    // Kết thúc một tuần
-    if ($i % 7 == 0) {
-        echo '</tr>';
-    }
-}
-
-// Kết thúc bảng
-echo '</table>';
-?>
-<?php
-// Lấy năm hiện tại
-$namHienTai = date('Y');
-
-// Vòng lặp qua từng tháng trong năm
-for ($thang = 1; $thang <= 12; $thang++) {
-    // Lấy số ngày trong tháng
-    $soNgayTrongThang = cal_days_in_month(CAL_GREGORIAN, $thang, $namHienTai);
-
-    // Lấy ngày đầu tiên của tháng
-    $ngayDauTien = date('Y-m-01', strtotime("$namHienTai-$thang-01"));
-
-    echo '<h2>Lịch tháng ' . $thang . '</h2>';
-    echo '<table border="1">';
-    echo '<tr>';
-    echo '<th>Mon</th>';
-    echo '<th>Tue</th>';
-    echo '<th>Wed</th>';
-    echo '<th>Thu</th>';
-    echo '<th>Fri</th>';
-    echo '<th>Sat</th>';
-    echo '<th>Sun</th>';
-    echo '</tr>';
-
-    // Lặp qua từng ngày trong tháng
-    for ($i = 1; $i <= $soNgayTrongThang; $i++) {
-        $ngayHienTai = date('Y-m-d', strtotime($ngayDauTien . '+' . ($i - 1) . ' days'));
-
-        // Hiển thị ngày trong bảng
-        echo '<td>' . $i . '</td>';
-
-        // Kết thúc một tuần
-        if ($i % 7 == 0) {
-            echo '</tr><tr>';
-        }
-    }
-
-    // Kết thúc bảng
-    echo '</tr></table>';
-}
-?>
 
 
         </div>
@@ -254,32 +170,20 @@ for ($thang = 1; $thang <= 12; $thang++) {
 
     <!-- Kết thúc phần main -->
     <script>
-                    $(document).ready(function () {
-                        var checkinDate;
+        // Lấy ngày hôm nay
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+        var yyyy = today.getFullYear();
 
-                        // Kích hoạt datepicker cho input check-in
-                        $("#checkin").datepicker({
-                            onSelect: function (selectedDate) {
-                                checkinDate = new Date(selectedDate);
-                                $("#checkout").datepicker("option", "minDate", checkinDate); // Đặt ngày tối thiểu cho ngày check-out
-                                $("#checkin").val(selectedDate);
-                            }
-                        });
+        today = yyyy + '-' + mm + '-' + dd;
 
-                        // Kích hoạt datepicker cho input check-out
-                        $("#checkout").datepicker({
-                            onSelect: function (selectedDate) {
-                                var checkoutDate = new Date(selectedDate);
-                                if (checkoutDate < checkinDate) {
-                                    alert("Ngày check-out không thể trước ngày check-in!");
-                                    $("#checkout").val(""); // Xóa giá trị nếu không hợp lệ
-                                } else {
-                                    $("#checkout").val(selectedDate);
-                                }
-                            }
-                        });
-                    });
-                </script>
+        // Đặt giá trị tối thiểu cho ngày check-in là ngày hôm nay
+        document.getElementById("checkin").setAttribute("min", today);
+
+        // Đặt giá trị tối thiểu cho ngày check-out là ngày hôm nay
+        document.getElementById("checkout").setAttribute("min", today);
+    </script>
                 <!-- Các ô nhập liệu để lưu giá trị đã chọn -->
                  <!-- <input type="text" id="selectedRoomType" readonly>
                  <input type="text" id="selectedGuestCount" readonly> -->

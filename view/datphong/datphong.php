@@ -1,7 +1,7 @@
 <?php  // Bắt đầu phiên
 
 ?>
-<form action="index.php?pg=booking" method="post" class="container mt-5">
+<form action="index.php?pg=booking" id="bookingForm" method="post" class="container mt-5">
     <input type="hidden" name="price" value="<?=$phong['room_price'];?>" id="price">
     <div class="form-group">
         <label for="ten">Họ và Tên:</label>
@@ -37,24 +37,19 @@
         <label for="tong_gia">Tổng Giá:</label>
         <input type="text" id="tong_gia" name="tong_gia" class="form-control" value="" readonly>
     </div>
-    <div class="form-group">
-            <label for="payment_method">Phương Thức Thanh Toán:</label>
-            <select class="form-control" id="payment_method" name="payment_method" required>
-                <option value="1">MOMO</option>
-                <!-- <option value="2">Tiền Mặt</option> -->
-                
-                Thêm phương thức thanh toán khác nếu cần
-            </select>
-        </div>
     <!-- <div class="form-group">
         <label for="so_nguoi">Số Người:</label>
         <input type="number" id="so_nguoi" name="so_nguoi" class="form-control" required>
     </div> -->
 
-    <!-- <div class="form-group">
-        <label for="loai_phong">Loại Phòng:</label>
-        <select id="loai_phong" name="loai_phong" class="form-control" required>
-        <option value="0" selected> Loại Phòng</option> -->
+    <div class="form-group">
+    <label for="phuong_thuc">Phương thức thanh toán:</label>
+    <select id="phuong_thuc" name="payment_method" class="form-control" required>
+        <option value="" disabled selected hidden>Chọn phương thức thanh toán</option>
+        <option value="1">ATM momo</option>
+        <option value="2">Tiền mặt</option>
+    </select>
+</div>
         <?php 
         // foreach($listdanhmuc as $danhmuc){
         // extract($danhmuc);
@@ -66,29 +61,26 @@
             <option value="phong_doi">Phòng Đôi</option> -->
             <!-- Thêm các loại phòng khác nếu cần -->
         <!-- </select> -->
-    </div>
+   
             <br>
-    <button type="submit" class="btn btn-primary" name="booking">Đặt Phòng</button>
+    <button type="submit" class="btn btn-primary" name="payUrl">Đặt Phòng</button>
 </form>
 <script>
-    // Lấy thông tin phòng từ server hoặc truyền từ trang trước
-    // const roomDetails = {
-    //     roomName: "Phòng VIP",
-    //     description: "Mô tả phòng...",
-    //     price: 100
-    // };
+        document.getElementById('bookingForm').addEventListener('submit', function(event) {
+        var ngayDen = new Date(document.getElementById('ngay_den').value);
+        var ngayDi = new Date(document.getElementById('ngay_di').value);
 
-    // Hiển thị thông tin phòng
-    // document.getElementById('roomDetails').innerHTML = `
-    //     <h2>${roomDetails.roomName}</h2>
-    //     <p>${roomDetails.description}</p>
-    //     <p>Giá: $${roomDetails.price}/đêm</p>
-    // `;
+        if (ngayDen > ngayDi) {
+            alert('Ngày đi phải lớn hơn ngày đến.');
+            event.preventDefault(); // Ngăn chặn form submit nếu điều kiện không được đáp ứng
+        }
+    });
 
-    // Gán giá trị mặc định cho ngày nhận phòng và ngày trả phòng
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('ngay_den').value = today;
-    document.getElementById('ngay_di').value = today;
+
+    // // Gán giá trị mặc định cho ngày nhận phòng và ngày trả phòng
+    // const today = new Date().toISOString().split('T')[0];
+    // document.getElementById('ngay_den').value = today;
+    // document.getElementById('ngay_di').value = today;
     
     function tinhTongGia() {
     var ngayDen = document.getElementById("ngay_den").value;

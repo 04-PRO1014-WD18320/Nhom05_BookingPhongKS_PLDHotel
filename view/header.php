@@ -15,12 +15,12 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
         /* Tùy chỉnh giao diện của input text */
-        .datepicker {
+      .datepicker {
             display: inline-block;
             padding: 10px;
             font-size: 16px;
         }
-        #banner {
+      #banner {
       width: 100%;
       margin: auto;
       overflow: hidden;
@@ -68,7 +68,7 @@
                             <a class="nav-link active" aria-current="page" href="#">Phòng |</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Thông tin |</a>
+                            <a class="nav-link active" aria-current="page" href="index.php?pg=lichsudon">Lich sử đơn hàng |</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Liên hệ</a>
