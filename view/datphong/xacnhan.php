@@ -1,5 +1,6 @@
 <?php
-// session_start();
+
+
 
 ?>
 <!DOCTYPE html>
@@ -7,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xác Nhận Đặt Phòng</title>
+    <title>Đặt phòng thành công</title>
 </head>
 <body>
 
@@ -29,8 +30,9 @@
                 echo "<p><strong>Ghi Chú:</strong> " . $confirmation_info['note'] . "</p>";
                 echo "<p><strong>Tống giá:</strong> " . $confirmation_info['gia'] . "</p>";
                 // Xóa thông tin đặt phòng từ session sau khi hiển thị
-                unset($_SESSION['confirmation_info']);
+              
             } else {
+                  unset($_SESSION['confirmation_info']);
                 echo "<p>Không có thông tin xác nhận.</p>";
             }
             ?>
@@ -41,7 +43,7 @@
                           action="view/datphong/xulythanhtoan.php">
         <!-- <a href="view/datphong/xulythanhtoan.php" class="btn btn-success mt-4">Tiến hành thanh toán</a> -->
         </form>
-        <a href="../index.php" class="btn btn-primary mt-4">Quay lại Trang Chủ</a>
+        <a href="index.php" class="btn btn-primary mt-4">Quay lại Trang Chủ</a>
     </div>
 </body>
 </html>

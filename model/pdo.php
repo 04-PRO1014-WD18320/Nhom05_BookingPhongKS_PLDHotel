@@ -31,6 +31,17 @@ function pdo_execute($sql){
         unset($conn);
     }
 }
+
+function pdo_last_insert_id() {
+    try {
+        $conn = pdo_get_connection();
+        return $conn->lastInsertId();
+    } catch (PDOException $e) {
+        throw $e;
+    } finally {
+        unset($conn);
+    }
+}
 /**
  * Thực thi câu lệnh sql truy vấn dữ liệu (SELECT)
  * @param string $sql câu lệnh sql

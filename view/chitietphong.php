@@ -1,51 +1,49 @@
 
-
-
-
-
-
-
-
-
-<div class="container mt-4">
+<<div class="container mt-4">
     <div class="row">
         <!-- Bên trái - Chi tiết phòng -->
         <div class="col-md-8">
             <div class="card">
-            <?php extract($phong);?>
-                <?php
-                echo '<div class="card-img-top"><img src="' . $img . '"></div>';?>
-                <div class="card-body">
-                    <?php
-                    echo '<h5 class="card-img-top">'.$room_name.'</h5>';
-                    echo '<h5 class="card-img-top">'.$description.'</h5>';
-                    echo '<h5 class="card-img-top">'.$room_price.'</h5>';
-                ?>
-                <button type="button" class="btn btn-primary"  href="index.php?pg=">Đặt ngay</button>
+                <?php if (is_array($phong)) : ?>
+                    <?php extract($phong);
+                     $img_path = "upload/" . $img;
+                     $datphong="index.php?pg=datphong&id=".$room_id; ?>
+                   
+                    <img src="<?= $img_path ?>" class="card-img-top" alt="<?= $room_name ?>" style="width: 100%; height: 350px;">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $room_name ?></h5>
+                        <p class="card-text"><?= $description ?></p>
+                        <p class="card-text">Giá phòng: <?= $room_price ?> VNĐ</p>
+                        <a href="<?= $datphong ?>" class="btn btn-primary">Book Now</a>
                     </div>
+                <?php endif; ?>
             </div>
+            <iframe src="view/binhluan/binhluan.php?room_id=<?= $id ?>" frameborder="0" width="100%" height="300px"></iframe>
         </div>
 
-        <!-- Bên phải - Danh sách phòng -->
+        <!-- Bên phải - Danh sách phòng và lịch đặt phòng -->
         <div class="col-md-4">
             <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action">
-                    
+                <?php foreach ($listp as $p) : ?>
                     <?php
-                    foreach ($phong_cungloai as $p) {
-                        extract($p);
-                        $linkp="index.php?pg=chitietphong&id=".$room_id;
-                        echo '<div class="card-img-top"><img src="' . $img . '"></div>';
-
-                        echo '<li><a href="'.$linkp.'">'.$room_name.'</a></li>';
-                        echo '<h5 class="card-img-top">'.$description.'</h5>';
-                    echo '<h5 class="card-img-top">'.$room_price.'</h5>';
-
-                    }
+                    extract($p);
+                    $img_path = "upload/" . $img;
+                    $linkp = "index.php?pg=chitietphong&id=" . $room_id;
                     ?>
-                </a>
-                <!-- Thêm các sản phẩm cùng loại khác tương tự -->
+                    <a href="<?= $linkp ?>" class="list-group-item list-group-item-action">
+                        <img src="<?= $img_path ?>" alt="<?= $room_name ?>" class="img-fluid">
+                        <h5 class="mt-2"><?= $room_name ?></h5>
+                        <p>Giá phòng: <?= $room_price ?> VNĐ</p>
+                    </a>
+                <?php endforeach; ?>
             </div>
+
+            <h1>Lịch đặt phòng</h1>
+            <div id="dateInfo"></div>
+            <div id="calendar"></div>
+
+            <button id="prevMonthBtn" class="btn btn-secondary">Previous Month</button>
+            <button id="nextMonthBtn" class="btn btn-secondary">Next Month</button>
         </div>
     </div>
 </div>
@@ -57,83 +55,226 @@
 
 
 
+   
 
+    <?php
+      
+        $bookedDates = [];
+        function getDatesBetween($start, $end) {
+            $dates = [];
+            $currentDate = strtotime($start);
+        
+            while ($currentDate <= strtotime($end)) {
+                $dates[] = date('Y-m-d', $currentDate);
+                $currentDate = strtotime('+1 day', $currentDate);
+            }
+        
+            return $dates;
+        }
+        if(!empty($ngay)){
+            foreach ($ngay as $key ) {
+                extract($key);
+                $start=$checkin_date;
+                $end=$checkout_date;
+                if (!isset($bookedDates)) {
+                  $bookedDates = [];
+              }
+                // Thêm tất cả các ngày giữa checkin_date và checkout_date vào mảng
+      $dateRange = getDatesBetween($checkin_date, $checkout_date);
+      foreach ($dateRange as $date) {
+          if (!in_array($date, $bookedDates)) {
+              $bookedDates[] = $date;
+          }
+      }
+              
+            }
+            // var_dump($bookedDates);
+            $bookedDatesJSON = json_encode($bookedDates);
+          }
+     
+    ?>
+    
 
+<style>   
+ #tong {
+        max-width: 1000px;
+        margin:  auto; /* Thêm margin và set auto để căn giữa */
+        /* background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden; */
+    }
+td.booked {
+            background-color: red;
+        }
 
-    <footer class="ftco-footer ftco-bg-dark ftco-section" style="background-color: #8798af;">
-        <div class="container" style="margin-top: 170px; padding-top: 50px;">
-          <div class="row mb-5">
-            <div class="col-md">
-              <div class="ftco-footer-widget mb-4">
-                <h2 class="ftco-heading-2">pld_hotel</h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                  <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                  <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                  <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-md">
-              <div class="ftco-footer-widget mb-4 ml-md-5">
-                <h2 class="ftco-heading-2">Useful Links</h2>
-                <ul class="list-unstyled">
-                  <li><a href="#" class="py-2 d-block">Blog</a></li>
-                  <li><a href="#" class="py-2 d-block">Rooms</a></li>
-                  <li><a href="#" class="py-2 d-block">Amenities</a></li>
-                  <li><a href="#" class="py-2 d-block">Gift Card</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-md">
-               <div class="ftco-footer-widget mb-4">
-                <h2 class="ftco-heading-2">Privacy</h2>
-                <ul class="list-unstyled">
-                  <li><a href="#" class="py-2 d-block">Career</a></li>
-                  <li><a href="#" class="py-2 d-block">About Us</a></li>
-                  <li><a href="#" class="py-2 d-block">Contact Us</a></li>
-                  <li><a href="#" class="py-2 d-block">Services</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-md">
-              <div class="ftco-footer-widget mb-4">
-                  <h2 class="ftco-heading-2">Have a Questions?</h2>
-                  <div class="block-23 mb-3">
-                    <ul>
-                      <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                      <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                      <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
-                    </ul>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 text-center">
-  
-              <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-            </div>
-          </div>
-        </div>
-      </footer>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
 
+        th {
+            background-color: #f2f2f2;
+        }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
+        .booked {
+            color: red;
+        }<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    #calendar {
+        max-width: 600px;
+        margin-top: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #3498db;
+        color: #fff;
+    }
+
+    td {
+        cursor: pointer;
+        position: relative;
+    }
+
+    .booked {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+
+    #dateInfo {
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        margin-top: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+</style>
+
+</style>
+    <script src="scripts.js"></script>
 </body>
-
-
-
 </html>
 
+<script>document.addEventListener("DOMContentLoaded", function () {
+      const calendarContainer = document.getElementById("calendar");
+            const dateInfoContainer = document.getElementById("dateInfo");
+            let currentYear, currentMonth;
+            const bookedDates =<?php echo $bookedDatesJSON; ?>; // Example of booked dates
+
+    function generateCalendar(year, month) {
+        const daysInMonth = new Date(year, month, 0).getDate();
+        const firstDay = new Date(year, month - 1, 1).getDay();
+
+        let table = '<table>';
+        table += '<thead>';
+        table += '<tr>';
+        table += '<th>Sun</th>';
+        table += '<th>Mon</th>';
+        table += '<th>Tue</th>';
+        table += '<th>Wed</th>';
+        table += '<th>Thu</th>';
+        table += '<th>Fri</th>';
+        table += '<th>Sat</th>';
+        table += '</tr>';
+        table += '</thead>';
+        table += '<tbody>';
+
+        let dayCounter = 1;
+
+        for (let i = 0; i < 6; i++) {
+            table += '<tr>';
+
+            for (let j = 0; j < 7; j++) {
+                if ((i === 0 && j < firstDay) || dayCounter > daysInMonth) {
+                    table += '<td></td>';
+                } else {
+                    const date = `${year}-${String(month).padStart(2, '0')}-${String(dayCounter).padStart(2, '0')}`;
+                    table += `<td ${bookedDates.includes(date) ? 'class="booked"' : ''}>${dayCounter}</td>`;
+                    dayCounter++;
+                }
+            }
+
+            table += '</tr>';
+        }
+
+        table += '</tbody>';
+        table += '</table>';
+
+        return table;
+    }
+   
+    function updateCalendar() {
+                calendarContainer.innerHTML = generateCalendar(currentYear, currentMonth);
+                dateInfoContainer.textContent = `Tháng ${currentMonth}, Năm ${currentYear}`;
+            }
+
+            function showPreviousMonth() {
+                if (currentMonth === 1) {
+                    currentMonth = 12;
+                    currentYear--;
+                } else {
+                    currentMonth--;
+                }
+                updateCalendar();
+            }
+
+            function showNextMonth() {
+                if (currentMonth === 12) {
+                    currentMonth = 1;
+                    currentYear++;
+                } else {
+                    currentMonth++;
+                }
+                updateCalendar();
+            }
+
+            document.getElementById("prevMonthBtn").addEventListener("click", showPreviousMonth);
+            document.getElementById("nextMonthBtn").addEventListener("click", showNextMonth);
+
+            // Initial display
+            const currentDate = new Date();
+            currentYear = currentDate.getFullYear();
+            currentMonth = currentDate.getMonth() + 1;
+            updateCalendar();
+});
+</script>

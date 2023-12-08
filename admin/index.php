@@ -1,12 +1,23 @@
 <?php
-include "header.php";
 include "../model/pdo.php";
+include "../controller/login.php";
+
 include "../model/phong.php";
 include "../model/danhmuc.php";
 include "../model/taikhoan.php";
+
+$allowedRoles=[1,2];
+checkRole($allowedRoles);
+include "header.php";
+
+
 if(isset($_GET['pg'])&&($_GET['pg']!="")){
     $pg=$_GET['pg'];
     switch($pg){
+        // case "doanhthu":
+        //     $sql="SELECT DATE_FORMAT(start_date, '%Y-%m') AS thang, SUM(into_money) AS 
+        //     doanh_thu FROM booking_detail WHERE start_date BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') AND LAST_DAY(NOW()) GROUP BY thang";
+        //      $doanhthu=pdo_query($sql);
         case "listdv":
             $sql="SELECT * FROM `service` WHERE 1  order by service_id desc";
             $listdv=pdo_query($sql);
@@ -53,6 +64,12 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             $room_price=pdo_query_value($sql5);
             $sql_update_trangthai="UPDATE rooms SET Trangthai = '1' WHERE room_id = (SELECT room_id FROM datphong WHERE datphong_id =$bookingId)";
             pdo_execute($sql_update_trangthai);
+            $sql_pay="SELECT COALESCE(SUM(amount_paid), 0) AS total_paid
+                    FROM payments
+                    WHERE booking_id =".$bookingId ;
+            $paid=pdo_query_value($sql_pay);
+            var_dump($paid);
+            $paidJSON = json_encode($paid);
             include "dondat/checkout_form.php";
             break;
         case "cancel":
@@ -71,6 +88,8 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             break;
 
         case "themphong":
+            $allowedRoles=[1];
+            checkRole($allowedRoles);
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Lấy dữ liệu từ các trường nhập
                 $room_id = $_POST['room_id'];
@@ -100,6 +119,8 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             break;
 
         case "xoaphong":
+            $allowedRoles=[1];
+            checkRole($allowedRoles);
             if(isset($_GET['id'])&&($_GET['id']>0)){
                 delete_phong($_GET['id']); 
             }
@@ -135,6 +156,8 @@ if(isset($_GET['pg'])&&($_GET['pg']!="")){
             break;
 
         case "suaphong":
+            $allowedRoles=[1];
+            checkRole($allowedRoles);
             if(isset($_GET['id'])&&($_GET['id']>0)){
                 $rooms=loadone_phong($_GET['id']);
             }

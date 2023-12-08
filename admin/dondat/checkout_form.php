@@ -41,7 +41,7 @@ $tienPhong= $so_ngay * $room_price;
 
         <div class="form-group">
             <label for="payment_method">Phương Thức Thanh Toán:</label>
-            <select class="form-control" id="payment_method" name="payment_method" required>
+            <select class="form-control" id="payment_method" name="payment_method" onchange="updateOrderDetails()" required>
                 <option value="1">Chuyển khoản</option>
                 <option value="2">Thẻ Tín Dụng</option>
                 <option value="3">Tiền Mặt</option> 
@@ -86,6 +86,8 @@ $tienPhong= $so_ngay * $room_price;
                     <p id="price">Tiền Dịch Vụ: 0VNĐ</p>
                     <input id="totalp"type="hidden" name="total">
                     <p id="total"  >Tổng tiền: 0VNĐ</p>
+                    <p id="total_paid"  >Tiền đã thanh toán: 0VNĐ</p>
+                    <p id="remain"  >Còn lại: 0VNĐ</p>
                     <!-- <input class="form-control" type="number" id="quantity" value="1" min="1" onchange="updateOrderDetails()" type="hidden"> -->
                     <input type="hidden" name="" onchange="updateOrderDetails()" id="quantity">
                 </div>
@@ -107,8 +109,11 @@ $tienPhong= $so_ngay * $room_price;
     <script>
         // Hàm cập nhật thông tin đặt hàng khi có sự thay đổi
         var room_price = document.getElementById("room_price").value;
+        var  paid =<?php echo  $paidJSON ; ?>;
             giaPhong.innerText="Tiền Phòng: " +  room_price + "VNĐ"
-          
+            var total_paid= document.getElementById("total_paid");
+            format=parseInt(paid).toLocaleString();
+            total_paid.innerText="Tiền đã thanh toán: " +format+ "VNĐ";
         function updateOrderDetails() {
             var checkboxes = document.querySelectorAll('input[type="checkbox"]');
             var serviceName = document.getElementById("service-name");
@@ -136,9 +141,12 @@ $tienPhong= $so_ngay * $room_price;
             service.value = selectedServiceNames;
             price.innerText = "Tiền Dịch Vụ: " + (selectedPrices.reduce((total, price) => total + price, 0)).toFixed(0)+"VNĐ";
             var tong=parseInt(room_price)+parseInt((selectedPrices.reduce((total, price) => total + price, 0)).toFixed(2));
-            total.innerText="Tổng tiền: " +  tong + "VNĐ";
+            total.innerText="Tổng tiền: " +  parseInt(tong).toLocaleString() + "VNĐ";
             var totalp = document.getElementById("totalp");
             totalp.value= tong;
+            var rm=(tong-parseInt(paid)).toLocaleString();
+            var remain=document.getElementById("remain");
+            remain.innerText= "Còn lại: " +rm+ "VNĐ";
         }
 
         // Hàm tăng số lượng

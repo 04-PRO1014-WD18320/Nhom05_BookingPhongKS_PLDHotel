@@ -1,7 +1,42 @@
+<?php
+// include "../model/pdo.php";
+ $sql="SELECT DATE_FORMAT(start_date, '%Y-%m') AS thang, SUM(into_money) AS 
+ doanh_thu FROM booking_detail WHERE start_date BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') AND LAST_DAY(NOW()) GROUP BY thang";
+ $doanhthu=pdo_query($sql);
+
+ $sql1 = "SELECT DATE_FORMAT(start_date, '%Y-%m') AS thang, SUM(into_money) AS doanh_thu
+ FROM booking_detail
+ WHERE start_date BETWEEN DATE_FORMAT(NOW(), '%Y-01-01') AND LAST_DAY(NOW())
+ GROUP BY thang
+ ORDER BY thang";
+
+$sql2 = "SELECT YEAR(start_date) AS nam, SUM(into_money) AS doanh_thu
+FROM booking_detail
+WHERE start_date BETWEEN DATE_FORMAT(NOW(), '%Y-01-01') AND LAST_DAY(NOW())
+GROUP BY nam
+ORDER BY nam";
+$doanhthunam=pdo_query($sql2);
+ // Tạo mảng chứa tất cả các tháng trong năm
+$allMonths = array();
+for ($i = 1; $i <= 12; $i++) {
+    $allMonths[] = date('Y-m', mktime(0, 0, 0, $i, 1, date('Y')));
+}
+$doanhthutuan=pdo_query($sql1);
+foreach ($doanhthutuan as $dtt) {
+    # code...
+    $data[$dtt['thang']] = $dtt['doanh_thu'];
+}
+foreach ($allMonths as $month) {
+    if (!isset($data[$month])) {
+        $data[$month] = 0;
+    }
+}
+ksort($data);
+?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-<!-- Page Heading -->
+<!-- Page Heading -->   
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
@@ -19,7 +54,14 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Earnings (Monthly)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
+                        foreach ($doanhthu as  $dt) {
+                          
+                           echo  number_format($dt["doanh_thu"], 0, ',', '.');
+                          
+                        //    $data[]=$dt;
+                        }
+                        ?> </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -37,7 +79,14 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Earnings (Annual)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
+                        foreach ($doanhthunam as  $dt) {
+                          
+                           echo  number_format($dt["doanh_thu"], 0, ',', '.');
+                          
+                        //    $data[]=$dt;
+                        }
+                        ?></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -331,3 +380,26 @@
 
 </div>
 <!-- End of Main Content -->
+<script>
+        var ctx = document.getElementById('myAreaChart').getContext('2d');
+
+        var myAreaChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode(array_map(function ($month) {
+                    return date('F', strtotime($month));
+                }, $allMonths)); ?>,
+                datasets: [{
+                    label: 'Doanh thu',
+                    data: <?php echo json_encode(array_values($data)); ?>,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                // Cấu hình thêm (nếu cần)
+            }
+        });
+    </script>
+    
